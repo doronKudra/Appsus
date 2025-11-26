@@ -42,12 +42,9 @@ export function NoteIndex() {
     return (
         <section className="note-index">
             {/* noteFilter */}
-            <section style={{ marginTop: '10px' }} className="container">
-                <form id="myForm" action="">
-                    <input type="text" name="content" />
-                    <button type="submit">Add Note</button>
-                </form>
-            </section>
+            <div style={{ marginTop: '24px' }} className="new-note" placeHolder="Write a note...">
+
+            </div>
             <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} notes={notes} />
         </section>
     )
