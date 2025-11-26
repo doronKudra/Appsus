@@ -2,6 +2,7 @@
 import { NoteList } from "../cmps/NoteList.jsx"
 import { noteService } from "../services/note.service.js"
 import { useSearchParamsFilter } from "../customHooks/useSearchParamsFilter.js"
+import { NoteAdd } from "../cmps/NoteAdd.jsx"
 
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
@@ -25,6 +26,11 @@ export function NoteIndex() {
             .catch(err => { console.log('err:', err) })
     }
 
+    function onAddNote(note) {
+        noteService.save(note)
+            .then(() => loadNotes())
+    }
+
     function onRemoveNote(noteId) {
         setIsLoading(true)
         noteService.remove(noteId)
@@ -41,10 +47,7 @@ export function NoteIndex() {
     const loadingClass = isLoading ? 'loading' : ''
     return (
         <section className="note-index">
-            {/* noteFilter */}
-            <div style={{ marginTop: '24px' }} className="new-note" placeHolder="Write a note...">
-
-            </div>
+            <NoteAdd onAddNote={onAddNote} />
             <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} notes={notes} />
         </section>
     )

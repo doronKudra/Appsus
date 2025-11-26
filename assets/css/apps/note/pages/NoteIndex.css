@@ -1,5 +1,8 @@
 .note-index *{
     font-family: "Google Sans","Roboto",arial,sans-serif;
+    input{
+        border: none;
+    }
 }
 
 .note-title{
@@ -17,9 +20,25 @@
     place-self: center;
     max-width: 500px;
     width: 80vw;
-    min-height: 35px;
+    margin-top: 25px;
+    max-height: 35px;
     border-radius: 5px;
     border: 1px solid rgb(216, 215, 215);
+    border-bottom-color: rgb(185, 185, 185);
     cursor: text;
     box-shadow: 1px 1px 0 rgba(0,0,0,.1), 0 1px 0 rgba(0,0,0,.07);
+}
+
+.text-box-cosmetic{
+    color: rgba(0, 0, 0, 0.5);
+    padding: 8px 12px 8px 12px;
+}
+
+.new-note .active{
+    background-color: black;
+}
+
+.new-note-open{
+    min-height: 70px;
+    max-height: none;
 }
