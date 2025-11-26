@@ -15,10 +15,11 @@
     display: block;
     position: relative;
     place-self: center;
-    width: 500px;
+    max-width: 500px;
+    width: 80vw;
     min-height: 35px;
     border-radius: 5px;
     border: 1px solid rgb(216, 215, 215);
-    
+    cursor: text;
     box-shadow: 1px 1px 0 rgba(0,0,0,.1), 0 1px 0 rgba(0,0,0,.07);
 }
