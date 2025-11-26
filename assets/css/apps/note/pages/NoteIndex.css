@@ -1,20 +1,32 @@
-.note-index *{
-    font-family: "Google Sans","Roboto",arial,sans-serif;
-    input{
+.note-index * {
+    font-family: "Google Sans", "Roboto", arial, sans-serif;
+
+    input {
         border: none;
+        width: 500px;
+        margin-top: 10px;
+        margin-left: 10px;
     }
+
+    input:focus {
+        outline: none;
+        /* Removes the default browser focus outline */
+        border: none;
+        /* Removes the standard border when focused */
+    }
+
 }
 
-.note-title{
+.note-title {
     font-size: 1rem;
     margin-block: 0.25rem;
 }
 
-.note-txt{
+.note-txt {
     font-size: 0.75rem;
 }
 
-.new-note{
+.new-note {
     display: block;
     position: relative;
     place-self: center;
@@ -26,19 +38,19 @@
     border: 1px solid rgb(216, 215, 215);
     border-bottom-color: rgb(185, 185, 185);
     cursor: text;
-    box-shadow: 1px 1px 0 rgba(0,0,0,.1), 0 1px 0 rgba(0,0,0,.07);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, .1), 0 1px 0 rgba(0, 0, 0, .07);
 }
 
-.text-box-cosmetic{
+.text-box-cosmetic {
     color: rgba(0, 0, 0, 0.5);
     padding: 8px 12px 8px 12px;
 }
 
-.new-note .active{
+.new-note .active {
     background-color: black;
 }
 
-.new-note-open{
+.new-note-open {
     min-height: 70px;
     max-height: none;
 }
