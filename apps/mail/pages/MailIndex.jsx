@@ -10,7 +10,7 @@ export function MailIndex() {
     const [mails, setMails] = useState(null)
 
     useEffect(() => {
-        loadMails()
+        loadMails() 
     }, [])
 
     function loadMails() {

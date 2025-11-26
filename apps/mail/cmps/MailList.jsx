@@ -4,7 +4,15 @@ import { MailPreview } from "./MailPreview.jsx"
 
 
 export function MailList({ mails }) {
-    console.log('mails:', mails)
+    
+    function onCheckBox({ target },mailId) {
+        const value = target.checked
+        console.log('i do nothing for now:','value:',value, mailId)
+    }
+
+    function onDelete(mailId) {
+        console.log('mailId:',mailId)
+    }
 
     if (!mails.length) return <div>No Mails To Show...</div>
     return (
@@ -12,37 +20,14 @@ export function MailList({ mails }) {
             <div>Mail list</div>
             <ul className="mail-list">
                 {mails.map(mail => 
-                    <li className="mail-container" key={mail.id}>
-                        <MailPreview mail={mail} />
+                    <li className={`mail-container ${mail.isRead?'read':''}`} key={mail.id}>
+                        <MailPreview
+                         mail={mail} 
+                         onCheckBox={(ev)=> onCheckBox(ev, mail.id)} 
+                         onDelete={()=> onDelete(mail.id)}/>
                     </li>
                 )}
             </ul>
         </React.Fragment>
     )
 }
-
-// export function CarList({ loadingClass, cars, onRemoveCar }) {
-
-
-//     return (
-//         <ul {...attrs}>
-//             {cars.map(car => (
-//                 <li className={loadingClass} key={car.id}>
-//                     <CarPreview car={car} />
-//                     <section>
-//                         <button onClick={() => onRemoveCar(car.id)}>
-//                             Remove
-//                         </button>
-//                         <button >
-//                             <Link to={`/car/${car.id}`}>Details</Link>
-//                         </button>
-//                         <button >
-//                             <Link to={`/car/edit/${car.id}`}>Edit</Link>
-//                         </button>
-//                     </section>
-//                 </li>
-//             ))}
-//         </ul>
-//     )
-
-// }

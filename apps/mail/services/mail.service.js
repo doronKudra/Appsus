@@ -4,6 +4,8 @@ import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 
 
+localStorage.clear()
+const months = ['jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const MAIL_KEY = 'mails'
 
 // const mail = {
@@ -24,6 +26,9 @@ const MAIL_KEY = 'mails'
 // }
 
 
+const sender = {name:'Momo',mail:'momo@momo.com'}
+
+
 _createMails()
 
 export const mailService = {
@@ -31,7 +36,8 @@ export const mailService = {
     get,
     remove,
     save,
-    getEmptyMail,
+    months,
+    // getEmptyMail,
     // getDefaultFilter,
     // getFilterFromSearchParams
 }
@@ -72,29 +78,35 @@ function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = [
-            _createMail('momo@momo.com', "subject1", 'text'),
-            _createMail('momo@momo.com', "subject2", 'text'),
-            _createMail('momo@momo.com', "subject3", 'text'),
-            _createMail('momo@momo.com', "subject4", 'text')
+            _createMail(sender, "subject1", utilService.makeLorem(10),'false'),
+            _createMail(sender, "subject2", utilService.makeLorem(15),'true'),
+            _createMail(sender, "subject3", utilService.makeLorem(20),'true'),
+            _createMail(sender, "subject4", utilService.makeLorem(25),'false')
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }
 }
 
-function _createMail(from, subject, body) {
-    const mail = getEmptyMail(from, subject, body)
+function _createMail(sender, subject, body, isRead) {
+    const mail = {
+        sender,
+        subject,
+        body,
+        isRead,
+        sentAt: Date.now(),
+    }
     mail.id = utilService.makeId()
     return mail
 }
 
-function getEmptyMail(from = '', subject = '', body = '') {
-    return {
-        from,
-        subject,
-        body,
-        sentAt: Date.now()
-    }
-}
+// function getEmptyMail(from = '', subject = '', body = '') {
+//     return {
+//         from,
+//         subject,
+//         body,
+//         sentAt: Date.now()
+//     }
+// }
 
 // function getDefaultFilter() {
 //     return { txt: '', minSpeed: '' }
@@ -109,15 +121,15 @@ function getEmptyMail(from = '', subject = '', body = '') {
 //     }
 // }
 
-function _setNextPrevMailId(mail) {
-    return query().then((mails) => {
-        const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
-        const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
-        const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
-        mail.nextMailId = nextMail.id
-        mail.prevMailId = prevMail.id
-        return mail
-    })
-}
+// function _setNextPrevMailId(mail) {
+//     return query().then((mails) => {
+//         const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
+//         const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
+//         const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
+//         mail.nextMailId = nextMail.id
+//         mail.prevMailId = prevMail.id
+//         return mail
+//     })
+// }
 
 
