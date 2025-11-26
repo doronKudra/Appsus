@@ -1,7 +1,5 @@
 function createEventEmitter() {
     const listenersMap = {}
-    // Trick for DEBUG
-    window.mapmap = listenersMap
     return {
         on(evName, listener) {
             listenersMap[evName] = (listenersMap[evName]) ? [...listenersMap[evName], listener] : [listener]
@@ -17,6 +15,7 @@ function createEventEmitter() {
 }
 
 export const eventBusService = createEventEmitter()
+window.evBus = eventBusService
 
 export function showUserMsg(msg) {
     eventBusService.emit('show-user-msg', msg)
@@ -29,16 +28,17 @@ export function showErrorMsg(txt) {
     showUserMsg({ txt, type: 'error' })
 }
 
+window.showSuccessMsg = showSuccessMsg
+window.showErrorMsg = showErrorMsg
 
-// Service Testing:
-// eventBus.on('muk', (data)=>{
+// eventBusService.on('muk', (data)=>{
 //     console.log('Got Muk with data:', data)
 // })
-// eventBus.on('muk', console.log)
-// eventBus.on('puk', (level)=>{
+// eventBusService.on('muk', console.log)
+// eventBusService.on('puk', (level)=>{
 //     console.log('Got puk with level:', level)
 // })
-// const unsubscribe = eventBus.on('puk', data=>{
+// const unsubscribe = eventBusService.on('puk', data=>{
 //     console.log('Mee too:', data)
 // })
 

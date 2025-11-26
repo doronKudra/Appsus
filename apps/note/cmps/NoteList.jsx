@@ -7,7 +7,6 @@ export function NoteList({ loadingClass, notes: notes, onRemoveNote }) {
     if (!notes.length) return <div>No notes To Show...</div>
 
     const attrs = {
-        title: 'Hello List',
         className: 'note-list container'
     }
     return (

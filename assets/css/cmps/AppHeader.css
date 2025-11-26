@@ -1,13 +1,13 @@
 .app-header {
+    background: rgb(93, 255, 255);
+    border-bottom: 2px solid white;
     display: flex;
     justify-content: space-between;
-    padding: 20px 0;
-    background: lightcyan;
-    border-bottom: 2px solid white;
+    padding: 0.5rem 0;
 }
 
 nav a {
-    margin: .5em;
+    margin-inline: .5em;
 }
 
 nav a:active {
@@ -18,4 +18,8 @@ nav a.active {
     color: darkblue;
     font-weight: bold;
     text-decoration: overline;
+}
+
+.logo{
+    max-height: 30px;
 }
