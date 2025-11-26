@@ -22,7 +22,7 @@ export function NoteIndex() {
     function loadNotes() {
         noteService.query(filterBy)
             .then(notes => setNotes(notes))
-            .catch(err => {console.log('err:', err)})
+            .catch(err => { console.log('err:', err) })
     }
 
     function onRemoveNote(noteId) {
@@ -32,7 +32,7 @@ export function NoteIndex() {
                 setNotes((prevNotes) => prevNotes.filter(note => note.id !== noteId))
                 showSuccessMsg(`Note (${noteId}) removed successfully!`)
             })
-            .catch(err => {console.log('Problem removing note:', err)})
+            .catch(err => { console.log('Problem removing note:', err) })
             .finally(() => setIsLoading(false))
     }
 
@@ -43,7 +43,10 @@ export function NoteIndex() {
         <section className="note-index">
             {/* noteFilter */}
             <section style={{ marginTop: '10px' }} className="container">
-                <Link to="/note/edit">Add Note</Link>
+                <form id="myForm" action="">
+                    <input type="text" name="content" />
+                    <button type="submit">Add Note</button>
+                </form>
             </section>
             <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} notes={notes} />
         </section>

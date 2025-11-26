@@ -1,1 +1,12 @@
- /* note index */
+.note-index *{
+    font-family: "GoogleSansFlex";
+}
+
+.note-title{
+    font-size: 1.5rem;
+    margin-block: 0.25rem;
+}
+
+.note-txt{
+    
+}

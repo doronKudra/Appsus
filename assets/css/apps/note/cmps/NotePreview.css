@@ -1,0 +1,13 @@
+.note-preview {
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+  transition: transform 0.1s ease;
+}
+
+.note-preview:hover {
+  transform: scale(1.02);
+}
