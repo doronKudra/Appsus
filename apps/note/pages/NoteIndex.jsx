@@ -2,6 +2,7 @@
 import { NoteList } from "../cmps/NoteList.jsx"
 import { noteService } from "../services/note.service.js"
 import { useSearchParamsFilter } from "../customHooks/useSearchParamsFilter.js"
+import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { NoteAdd } from "../cmps/NoteAdd.jsx"
 
 const { useState, useEffect } = React
@@ -23,7 +24,11 @@ export function NoteIndex() {
     function loadNotes() {
         noteService.query(filterBy)
             .then(notes => setNotes(notes))
-            .catch(err => { console.log('err:', err) })
+            .catch(
+                err => { 
+                    console.log('Problem Loading Notes:', err) 
+                    showErrorMsg(`Unable To Load Notes`)
+                })
     }
 
     function onAddNote(note) {
@@ -38,7 +43,10 @@ export function NoteIndex() {
                 setNotes((prevNotes) => prevNotes.filter(note => note.id !== noteId))
                 showSuccessMsg(`Note (${noteId}) removed successfully!`)
             })
-            .catch(err => { console.log('Problem removing note:', err) })
+            .catch(err => {
+                console.log('Problem removing note:', err) 
+                showErrorMsg(`Unable To Remove Note`)
+            })
             .finally(() => setIsLoading(false))
     }
 
