@@ -4,7 +4,7 @@ import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 
 
-localStorage.clear()
+// localStorage.clear()
 const months = ['jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const MAIL_KEY = 'mails'
 
@@ -26,7 +26,7 @@ const MAIL_KEY = 'mails'
 // }
 
 
-const sender = {name:'Momo',mail:'momo@momo.com'}
+const sender = { name: 'Momo', mail: 'momo@momo.com' }
 
 
 _createMails()
@@ -36,6 +36,7 @@ export const mailService = {
     get,
     remove,
     save,
+    getSentTime,
     months,
     // getEmptyMail,
     // getDefaultFilter,
@@ -78,10 +79,10 @@ function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = [
-            _createMail(sender, "subject1", utilService.makeLorem(10),'false'),
-            _createMail(sender, "subject2", utilService.makeLorem(15),'true'),
-            _createMail(sender, "subject3", utilService.makeLorem(20),'true'),
-            _createMail(sender, "subject4", utilService.makeLorem(25),'false')
+            _createMail(sender, "subject1", utilService.makeLorem(10), 'false'),
+            _createMail(sender, "subject2", utilService.makeLorem(15), 'true'),
+            _createMail(sender, "subject3", utilService.makeLorem(20), 'true'),
+            _createMail(sender, "subject4", utilService.makeLorem(25), 'false')
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }
@@ -97,6 +98,17 @@ function _createMail(sender, subject, body, isRead) {
     }
     mail.id = utilService.makeId()
     return mail
+}
+
+function getSentTime(time) { // time = 176416405...
+    const sentAt = new Date(time)
+    const timeDiff = new Date(sentAt) - time
+
+    if (timeDiff < 86400000) {
+        return `${sentAt.getHours()}:${sentAt.getMinutes()}`
+    } else {
+        return `${mailService.months[sentAt.getMonth()]} ${sentAt.getDate()}`
+    }
 }
 
 // function getEmptyMail(from = '', subject = '', body = '') {

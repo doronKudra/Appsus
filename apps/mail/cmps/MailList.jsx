@@ -1,18 +1,19 @@
 import { MailPreview } from "./MailPreview.jsx"
 
 // const { Link } = ReactRouterDOM
+const { useEffect, useState } = React
 
 
-export function MailList({ mails }) {
+export function MailList({ mails ,onRead, onDelete}) {
+
     
-    function onCheckBox({ target },mailId) {
-        const value = target.checked
+    function onCheckBox(ev,mailId) {
+        ev.stopPropagation()
+        const value = ev.target.checked
         console.log('i do nothing for now:','value:',value, mailId)
     }
 
-    function onDelete(mailId) {
-        console.log('mailId:',mailId)
-    }
+    
 
     if (!mails.length) return <div>No Mails To Show...</div>
     return (
@@ -20,11 +21,11 @@ export function MailList({ mails }) {
             <div>Mail list</div>
             <ul className="mail-list">
                 {mails.map(mail => 
-                    <li className={`mail-container ${mail.isRead?'read':''}`} key={mail.id}>
+                    <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'read':''}`} key={mail.id}>
                         <MailPreview
                          mail={mail} 
                          onCheckBox={(ev)=> onCheckBox(ev, mail.id)} 
-                         onDelete={()=> onDelete(mail.id)}/>
+                         onDelete={(ev)=> onDelete(ev,mail.id)}/>
                     </li>
                 )}
             </ul>
