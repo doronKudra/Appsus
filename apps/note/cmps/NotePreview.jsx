@@ -3,7 +3,7 @@ import { NoteTxt } from './NoteTxt.jsx'
 import { NoteImg } from './NoteImg.jsx'
 import { NoteTodos } from './NoteTodos.jsx'
 
-export function NotePreview({ note, onRemoveNote, onPinNote, onDuplicateNote }) {
+export function NotePreview({ note, onRemoveNote, onPinNote, onDuplicateNote }) {//
     return (
         <div className="note-preview">
             <DynamicCmp note={note} />
