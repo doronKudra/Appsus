@@ -41,6 +41,10 @@ export function NoteAdd({ onAddNote }) {
 		setIsEdit(false)
 	}
 
+	function onImageNote(){
+
+	}
+
 	function onSubmit(ev) {
 		ev.preventDefault()
 		closeEditor()
@@ -50,6 +54,9 @@ export function NoteAdd({ onAddNote }) {
 		return (
 			<div className="new-note" onClick={openEditor}>
 				<div className="text-box-cosmetic">Write a note...</div>
+				<div className="note-options">
+					<input onChange={onAddNote} note={{ type: 'NoteImg', isPinned: false, info: { title, txt, tags: {} }, style: {}, createdAt: Date.now() }} type="file" id="imageInput" accept="image/*" />
+				</div>
 			</div>
 		)
 	}

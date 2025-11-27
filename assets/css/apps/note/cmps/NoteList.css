@@ -1,5 +1,7 @@
 .note-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
-  gap: 10px;
+  columns: 240px 8;
+  padding-right: 40px;
+  max-height: 80vh;
+  column-gap: 16px;
+  
 }

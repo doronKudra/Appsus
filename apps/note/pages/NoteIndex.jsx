@@ -4,6 +4,7 @@ import { noteService } from "../services/note.service.js"
 import { useSearchParamsFilter } from "../customHooks/useSearchParamsFilter.js"
 import { showErrorMsg, showSuccessMsg } from "../../../services/event-bus.service.js"
 import { NoteAdd } from "../cmps/NoteAdd.jsx"
+import { NoteFilter } from "../cmps/NoteFilter.jsx"
 
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
@@ -50,13 +51,33 @@ export function NoteIndex() {
             .finally(() => setIsLoading(false))
     }
 
+    function onSetFilter({tag,type}){
+        
+    }
+
+    function onPinNote(note){
+        console.log(note)
+        note.isPinned = !note.isPinned
+        noteService.save(note)
+            .then(() => loadNotes())
+    }
+
+    function onDuplicateNote(note){
+        delete note.id
+        note.createdAt = Date.now()
+        onAddNote(note)
+    }
+
     if (!notes) return <div className="loader">Loading...</div>
     console.log('notes:', notes)
     const loadingClass = isLoading ? 'loading' : ''
     return (
-        <section className="note-index">
+        <div>
+        <NoteFilter onSetFilter={onSetFilter} />
+        <section  className="note-index">
             <NoteAdd onAddNote={onAddNote} />
-            <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} notes={notes} />
+            <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} onPinNote={onPinNote} onDuplicateNote={onDuplicateNote} notes={notes} />
         </section>
+        </div>
     )
 }

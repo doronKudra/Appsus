@@ -1,11 +1,10 @@
 .note-index * {
     font-family: "Google Sans", "Roboto", arial, sans-serif;
-
     input {
         border: none;
-        width: 500px;
-        margin-top: 10px;
-        margin-left: 10px;
+        width: 95%;
+        margin-top: 8px;
+        margin-left: 8px;
     }
 
     input:focus {
@@ -17,23 +16,28 @@
 
 }
 
+.note-index{
+    padding-left: 80px;
+    padding-top: 40px;
+}
+
 .note-title {
-    font-size: 1rem;
+    font-size: 1.25rem;
+    font-weight: 100;
     margin-block: 0.25rem;
 }
 
 .note-txt {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
 }
 
 .new-note {
     display: block;
     position: relative;
     place-self: center;
-    max-width: 500px;
+    max-width: 600px;
     width: 80vw;
-    margin-top: 25px;
-    max-height: 35px;
+    max-height: 40px;
     border-radius: 5px;
     border: 1px solid rgb(216, 215, 215);
     border-bottom-color: rgb(185, 185, 185);
@@ -53,4 +57,22 @@
 .new-note-open {
     min-height: 70px;
     max-height: none;
+}
+
+.note-name-edit{
+    font-size: 1.25rem;
+}
+
+.note-text-edit{
+    font-size: 1rem;
+}
+
+.note-layout{
+    max-width: 240px;
+}
+
+.filter-bar{
+    position: absolute;
+    width: 80px;
+    height: 90vh;
 }

@@ -2,7 +2,7 @@
 
 import { NotePreview } from "./NotePreview.jsx";
 
-export function NoteList({ loadingClass, notes: notes, onRemoveNote }) {
+export function NoteList({ loadingClass, notes: notes, onRemoveNote, onPinNote ,onDuplicateNote}) {
 
     if (!notes.length) return <div>No notes To Show...</div>
 
@@ -10,17 +10,21 @@ export function NoteList({ loadingClass, notes: notes, onRemoveNote }) {
         className: 'note-list container'
     }
     return (
-        <ul {...attrs}>
-            {notes.map(note => (
-                <div className={loadingClass} key={note.id}>
-                    <section className="note-layout">
-                        <NotePreview note={note} />
-                        <button onClick={() => onRemoveNote(note.id)}>
-                            Remove
-                        </button>
-                    </section>
-                </div>
-            ))}
-        </ul>
+        <div>
+            <ul className='pinned note-layout' {...attrs}>
+                {notes.map(note => (
+                    note.isPinned && <NotePreview key={note.id} className={loadingClass}
+                     note={note} onRemoveNote={onRemoveNote} onPinNote={onPinNote} 
+                     onDuplicateNote={onDuplicateNote}/>
+                ))}
+            </ul>
+            <ul className='unpinned note-layout' {...attrs}>
+                {notes.map(note => (
+                    !note.isPinned && <NotePreview key={note.id} className={loadingClass}
+                     note={note} onRemoveNote={onRemoveNote} onPinNote={onPinNote} 
+                     onDuplicateNote={onDuplicateNote} />
+                ))}
+            </ul>
+        </div>
     )
 }

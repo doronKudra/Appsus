@@ -47,7 +47,7 @@ function save(note) {
     }
 }
 
-function getEmptyNote(type = 'NoteTxt',isPinned = 'false',info = {tags: {}},style = {},createdAt = Date.now()) {
+function getEmptyNote(type = 'NoteTxt',isPinned = false,info = {tags: {}},style = {},createdAt = Date.now()) {
     return { type,isPinned,info,style,createdAt}
 }
 
@@ -61,9 +61,9 @@ function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         notes = [
-            _createNote('NoteTxt','false',{title:'Hello There',txt:'Somebody',tags:'fashion'},{},Date.now() - 5*1000*60),
-            _createNote('NoteTxt','false',{title:'Somewhere',txt:'Over the rainbow',tags:'music'},{},Date.now() - 10*1000*60),
-            _createNote('NoteTxt','false',{title:'Very Good',txt:'Very Nice',tags:'funny'},{},Date.now() - 15*1000*60)
+            _createNote('NoteTxt',false,{title:'Hello There',txt:'Somebody',tags:'fashion'},{},Date.now() - 5*1000*60),
+            _createNote('NoteTxt',false,{title:'Somewhere',txt:'Over the rainbow',tags:'music'},{},Date.now() - 10*1000*60),
+            _createNote('NoteTxt',false,{title:'Very Good',txt:'Very Nice',tags:'funny'},{},Date.now() - 15*1000*60)
         ]
         utilService.saveToStorage(NOTE_KEY, notes)
     }
