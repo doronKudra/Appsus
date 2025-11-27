@@ -6,8 +6,9 @@ export function NoteAdd({ onAddNote }) {
 	const [txt, setTxt] = useState('')
 	const [imgSrc, setImgSrc] = useState('')
 	const [type, setType] = useState('NoteTxt')
+	const [items, setItems] = useState([])
 	const wrapperRef = useRef(null)
-	var note = { type, isPinned: false, info: { title, txt, tags: {} }, style: {}, createdAt: Date.now() }
+	var note = { type, isPinned: false, info: { items,title, txt, tags: {} }, style: {}, createdAt: Date.now() }
 	useEffect(() => {
 		if (!isEdit) return
 
@@ -29,7 +30,9 @@ export function NoteAdd({ onAddNote }) {
 		}
 	}, [isEdit, title, txt])
 
-	function openEditor() {
+	function openEditor(type = 'NoteTxt') {
+		setType(type)
+		note.info.items = []
 		setImgSrc('')
 		setIsEdit(true)
 	}
@@ -60,11 +63,18 @@ export function NoteAdd({ onAddNote }) {
 	}
 
 	function closeEditor() {
-		const isEmpty = !title.trim() && !txt.trim() && !imgSrc
+		console.log(note)
+		const isEmpty = !title.trim() && !txt.trim() && !imgSrc && !note.info.items.length
 		if (!isEmpty && typeof onAddNote === 'function') {
 			note.type = type
+			if(note.info.items.length) {
+				note.info.items.push(txt)
+				setItems(note.info.items)
+			}
 			compressImage(imgSrc)
+			
 			onAddNote(note)
+			
 		}
 		setType('NoteTxt')
 		setImgSrc('')
@@ -88,7 +98,7 @@ export function NoteAdd({ onAddNote }) {
 		if (files && files.length) {
 			const reader = new FileReader()
 			reader.onload = (e) => {
-				setImgSrc(e.target.result) // store string, not Image object
+				setImgSrc(e.target.result)
 				setIsEdit(true)
 				setType('NoteImg')
 			}
@@ -100,10 +110,14 @@ export function NoteAdd({ onAddNote }) {
 
 	if (!isEdit) {
 		return (
-			<div className="new-note" onClick={openEditor}>
+			<div className="new-note" onClick={(ev) => openEditor('NoteTxt')}>
 				<div className="text-box-cosmetic">Write a note...</div>
 				<div className="note-options">
 					<input onChange={getImage} onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
+					<button onClick={(ev) => {
+						onAddSpecialNote(ev)
+						openEditor('NoteTodos')
+					}}>To Do</button>
 				</div>
 			</div>
 		)
@@ -120,15 +134,34 @@ export function NoteAdd({ onAddNote }) {
 				className="note-name-edit"
 				placeholder="Name"
 				value={title}
-				onChange={(ev) => setTitle(ev.target.value)}
-			/>
-			<input
+				onChange={(ev) => setTitle(ev.target.value)}/>
+			{(type === 'NoteTodos')
+				&& (!!items.length)
+				&& (items.map((item, idx) => (<input
+					className={"note-text-edit edit-list-item-"+idx}
+					key={"edit-list-item-"+idx}
+					placeholder="To Do..."
+					value={item}
+					onChange={(ev) => {
+						note.info.items[idx] = ev.target.value
+						setItems([...note.info.items])
+					}}
+					/>)))}
+			{(<input
 				className="note-text-edit"
 				autoFocus
+				name="main-txt"
 				placeholder="Write a note..."
 				value={txt}
 				onChange={(ev) => setTxt(ev.target.value)}
-			/>
+			/>)}
+			{(type === 'NoteTodos') && 
+				(<button type="button" onClick={(ev) => {
+					onAddSpecialNote(ev)
+					setItems([...items, txt])
+					setTxt('')
+					console.log(note)
+				}}>Add Line</button>)}
 			<button type="submit" style={{ display: 'none' }}>save</button>
 		</form>
 	)
