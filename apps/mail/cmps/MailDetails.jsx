@@ -11,7 +11,6 @@ export function MailDetails() {
     const [mail, setMail] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
-    console.log('params:',params)
 
     useEffect(() => {
         loadMail()
@@ -32,12 +31,13 @@ export function MailDetails() {
     function onBack() {
         navigate('/mail')
     }
+    
     if (!mail) return <div>Loading</div>
     return (
         <section className="mail-details">
             <h3>Mail Details:</h3>
-            <h2>{mail.sender.name}</h2>
-            <h3>{mail.sender.mail}</h3>
+            <h2>{mail.from.name}</h2>
+            <h3>{mail.from.mail}</h3>
             <h5>{mailService.getSentTime(mail.sentAt)}</h5>
             <p>{mail.body}</p>
             <button onClick={onBack}>back</button>

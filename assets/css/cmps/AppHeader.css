@@ -1,9 +1,17 @@
 .app-header {
-    background: rgb(93, 255, 255);
+    background: rgb(211, 211, 211);
     border-bottom: 2px solid white;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 0;
+    height: 65px;
+    padding: 0;
+    font-family:Arial, Helvetica, sans-serif;
+
+    >a{
+        height: 100%;
+        padding: 5px;
+    }
 }
 
 nav a {
@@ -15,11 +23,11 @@ nav a:active {
 }
 
 nav a.active {
-    color: darkblue;
+    color: rgb(168, 13, 211);
     font-weight: bold;
-    text-decoration: overline;
+    border-bottom: 2px solid rgb(168, 13, 211);
 }
 
 .logo{
-    max-height: 30px;
+    height: 100%;
 }

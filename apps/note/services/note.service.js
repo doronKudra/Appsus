@@ -2,7 +2,7 @@ import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 
 const NOTE_KEY = 'noteDB'
-_createNotes()
+_createNotes() //
 
 export const noteService = {
     query,
@@ -55,8 +55,6 @@ function getDefaultFilter() {
     return { txt: '', type: '' , tag: '', color: ''}
 }
 
-
-
 function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
@@ -74,8 +72,6 @@ function _createNote(type,isPinned,info,style,createdAt) {
     note.id = utilService.makeId()
     return note
 }
-
-
 
 function getFilterFromSearchParams(searchParams) {
     const txt = searchParams.get('txt') || ''

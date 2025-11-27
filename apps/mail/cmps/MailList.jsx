@@ -4,16 +4,7 @@ import { MailPreview } from "./MailPreview.jsx"
 const { useEffect, useState } = React
 
 
-export function MailList({ mails ,onRead, onDelete}) {
-
-    
-    function onCheckBox(ev,mailId) {
-        ev.stopPropagation()
-        const value = ev.target.checked
-        console.log('i do nothing for now:','value:',value, mailId)
-    }
-
-    
+export function MailList({ mails ,onRead, onDelete, onReadUnread, onStarred}) {
 
     if (!mails.length) return <div>No Mails To Show...</div>
     return (
@@ -21,7 +12,12 @@ export function MailList({ mails ,onRead, onDelete}) {
             <ul className="mail-list">
                 {mails.map(mail => 
                     <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'mail-read':''}`} key={mail.id}>
-                        <MailPreview mail={mail} onCheckBox={(ev)=> onCheckBox(ev, mail.id)} onDelete={(ev)=> onDelete(ev,mail.id)}/>
+                        <MailPreview 
+                        mail={mail} 
+                        onDelete={(ev)=> onDelete(ev,mail.id)} 
+                        onReadUnread={(ev)=> onReadUnread(ev,mail)} 
+                        isRead={mail.isRead}
+                        onStarred={(ev)=>onStarred(ev,mail)}/>
                     </li>
                 )}
             </ul>

@@ -21,7 +21,9 @@
 /* mails */
 @import './apps/mail/pages/MailIndex.css';
 @import './apps/mail/cmps/MailList.css';
-@import './apps/mail/cmps/MainHeader.css';
+@import './apps/mail/cmps/MailHeader.css';
+@import './apps/mail/cmps/MailCompose.css';
+@import './apps/mail/cmps/MailFolderList.css';
 
 
 /* Cmps */
