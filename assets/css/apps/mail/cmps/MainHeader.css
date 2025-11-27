@@ -1,0 +1,26 @@
+
+.mail-header{
+    display: flex;
+    align-items: center;
+    justify-content:start;
+    height: 65px;
+    /* justify-content: space-between; */
+
+
+    >div{
+        display: flex;
+        .logo{
+            padding: 0 30px 0 10px;
+        }
+
+        >input{
+            width: 100%;
+        }
+    }
+
+    >.clear-storage{
+        position: absolute;
+        top: 65px;
+        
+    }
+}

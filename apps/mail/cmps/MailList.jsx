@@ -1,48 +1,30 @@
 import { MailPreview } from "./MailPreview.jsx"
 
 // const { Link } = ReactRouterDOM
+const { useEffect, useState } = React
 
 
-export function MailList({ mails }) {
-    console.log('mails:', mails)
+export function MailList({ mails ,onRead, onDelete}) {
+
+    
+    function onCheckBox(ev,mailId) {
+        ev.stopPropagation()
+        const value = ev.target.checked
+        console.log('i do nothing for now:','value:',value, mailId)
+    }
+
+    
 
     if (!mails.length) return <div>No Mails To Show...</div>
     return (
         <React.Fragment>
-            <div>Mail list</div>
             <ul className="mail-list">
                 {mails.map(mail => 
-                    <li className="mail-container" key={mail.id}>
-                        <MailPreview mail={mail} />
+                    <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'mail-read':''}`} key={mail.id}>
+                        <MailPreview mail={mail} onCheckBox={(ev)=> onCheckBox(ev, mail.id)} onDelete={(ev)=> onDelete(ev,mail.id)}/>
                     </li>
                 )}
             </ul>
         </React.Fragment>
     )
 }
-
-// export function CarList({ loadingClass, cars, onRemoveCar }) {
-
-
-//     return (
-//         <ul {...attrs}>
-//             {cars.map(car => (
-//                 <li className={loadingClass} key={car.id}>
-//                     <CarPreview car={car} />
-//                     <section>
-//                         <button onClick={() => onRemoveCar(car.id)}>
-//                             Remove
-//                         </button>
-//                         <button >
-//                             <Link to={`/car/${car.id}`}>Details</Link>
-//                         </button>
-//                         <button >
-//                             <Link to={`/car/edit/${car.id}`}>Edit</Link>
-//                         </button>
-//                     </section>
-//                 </li>
-//             ))}
-//         </ul>
-//     )
-
-// }

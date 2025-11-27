@@ -21,3 +21,18 @@
 .grid {
     display: grid;
 }
+
+.round-btns{
+    border: 0;
+    background-color: inherit;
+    border-radius: 50%;
+    &:hover{
+        /* background-color: white; */
+        cursor: pointer;
+        background-color: #00000016;
+    }
+}
+
+.mail-read{
+    background-color: rgba(242, 246, 252, 1);
+}
