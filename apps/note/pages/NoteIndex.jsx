@@ -56,7 +56,6 @@ export function NoteIndex() {
     }
 
     function onPinNote(note){
-        console.log(note)
         note.isPinned = !note.isPinned
         noteService.save(note)
             .then(() => loadNotes())
@@ -69,7 +68,6 @@ export function NoteIndex() {
     }
 
     if (!notes) return <div className="loader">Loading...</div>
-    console.log('notes:', notes)
     const loadingClass = isLoading ? 'loading' : ''
     return (
         <div>

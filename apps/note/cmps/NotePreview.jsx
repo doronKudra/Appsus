@@ -20,7 +20,8 @@ export function NotePreview({ note , onRemoveNote , onPinNote , onDuplicateNote}
     )
 }
 
-function DynamicCmp({ note }) {
+function DynamicCmp(props) {
+    const {note} = props
     switch (note.type) {
         case 'NoteTxt':
             return (<NoteTxt note={note} />)
