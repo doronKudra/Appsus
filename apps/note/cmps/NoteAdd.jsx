@@ -113,7 +113,7 @@ export function NoteAdd({ onAddNote }) {
 			<div className="new-note" onClick={(ev) => openEditor('NoteTxt')}>
 				<div className="text-box-cosmetic">Write a note...</div>
 				<div className="note-options">
-					<input onChange={getImage} onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
+					<input onChange={getImage} className="fa-solid fa-image" onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
 					<button onClick={(ev) => {
 						onAddSpecialNote(ev)
 						openEditor('NoteTodos')
