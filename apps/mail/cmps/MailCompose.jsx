@@ -12,9 +12,8 @@ export function MailCompose({ onCompose }) {
         setComposeData(mail => {
             console.log('mail:',mail)
             if (!mail.body || !mail.subject || ! mail.to.name || !mail.to.mail) return alert('missing information')
-            mailService.save(mail)
+            mailService.save(mail).then(()=>onCompose())
         }) 
-        onCompose()
     }
 
     function handleChange({ target }) {

@@ -8,18 +8,13 @@ import { storageService } from '../../../services/async-storage.service.js'
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const MAIL_KEY = 'mails'
 
-// const mail = {
-//     id: 'e101',
-//     createdAt: 1551133930500,
-//     subject: 'Miss you!',
-//     body: 'Would love to catch up sometimes',
-//     isRead: false,
-//     sentAt: 1551133930594,
-//     removedAt: null,
-//     from: 'momo@momo.com',
-//     to: 'user@appsus.com'
-// }
+/*
+filterBy = {
+    text,
 
+}
+
+*/
 const loggedinUser = {
     mail: 'user@appsus.com',
     name: 'Mahatma Appsus'
@@ -38,6 +33,8 @@ export const mailService = {
     save,
     getSentTime,
     getMailTemplate,
+    getUnreadMails,
+    getFilterByFolder,
     months,
     // getEmptyMail,
     // getDefaultFilter,
@@ -68,6 +65,7 @@ function remove(mailId) {
 }
 
 function save(mail) {
+    console.log('saving...')
     if (mail.id) {
         return storageService.put(MAIL_KEY, mail)
     } else {
@@ -79,11 +77,11 @@ function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = [
-            _createMail(sender, loggedinUser, "subject1", utilService.makeLorem(10), false),
-            _createMail(sender, loggedinUser, "subject2", utilService.makeLorem(15), true),
-            _createMail(sender, loggedinUser, "subject3", utilService.makeLorem(20), true),
-            _createMail(sender, loggedinUser, "subject4", utilService.makeLorem(25), false),
-            _createMail(loggedinUser, sender, "subject4", utilService.makeLorem(25), false),
+            _createMail(sender, loggedinUser, "subject1", utilService.makeLorem(10)),
+            _createMail(sender, loggedinUser, "subject2", utilService.makeLorem(15)),
+            _createMail(sender, loggedinUser, "subject3", utilService.makeLorem(20)),
+            _createMail(sender, loggedinUser, "subject4", utilService.makeLorem(25)),
+            _createMail(loggedinUser, sender, "subject4", utilService.makeLorem(25)),
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }
@@ -95,10 +93,14 @@ function _createMail(from, to, subject, body, isRead) {
         to,
         subject,
         body,
-        isRead,
         sentAt: Date.now(),
+        isRead: false,
+        isStarred: false,
+        isDraft: false,
+        id: utilService.makeId(),
+        isDeleted: false,
     }
-    mail.id = utilService.makeId()
+    // mail.id = utilService.makeId()
     return mail
 }
 
@@ -113,17 +115,62 @@ function getSentTime(time) { // time = 176416405...
     }
 }
 
-function getMailTemplate(to,subject,body) {
+function getMailTemplate(subject, body) {
     return {
-        from:loggedinUser,
-        to:{name:sender.name},
+        from: loggedinUser,
+        to: { name: sender.name, mail: '' },
         subject,
         body,
-        isRead:true,
-        sentAt: Date.now(),
+        isRead: false,
+        isStarred: false,
+        isDraft: false,
+        isDeleted: false,
+        sentAt: Date.now(),//TODO - move it to compose
     }
 }
 
+function getUnreadMails(mails) {
+    const unread = mails ? mails.filter(mail => !mail.isRead) : 0
+    return unread.length
+}
+
+function getFilterByFolder(mode, mails) {
+    console.log('mode,mails:', mode, mails)
+    const inboxFilter = { from: loggedinUser, isDraft: false, isDeleted: false }
+    const sentFilter = { from: loggedinUser, isDeleted: false }
+    const starredFliter = { isStarred: true, isDeleted: false }
+    const trashFilter = { isDeleted: true }
+    const draftsFilter = { isDraft: true }
+    if (mode === 'inbox') {
+        return mails.filter(mail => {
+            return (
+                inboxFilter.from.mail !== mail.from.mail &&
+                inboxFilter.isDeleted === mail.isDeleted &&
+                inboxFilter.isDraft === mail.isDraft
+            )
+        })
+    } else if (mode === 'starred') {
+        return mails.filter(mail => {
+            return (
+                starredFliter.isStarred === mail.isStarred &&
+                starredFliter.isDeleted === mail.isDeleted
+            )
+        })
+    } else if (mode === 'sent') {
+        return mails.filter(mail => {
+            return (
+                sentFilter.from.mail === mail.from.mail &&
+                sentFilter.isDeleted === mail.isDeleted 
+            )
+        })
+    }
+}
+
+
+
+// function getInboxMails(mails) {
+// const inboxMails = mails.filter(mail => mail.to === )
+// }
 // function getDefaultFilter() {
 //     return { txt: '', minSpeed: '' }
 // }

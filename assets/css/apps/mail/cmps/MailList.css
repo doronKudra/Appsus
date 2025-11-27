@@ -13,4 +13,21 @@
      justify-content: space-between;
      border-bottom: 1px solid rgb(203, 203, 203);
 
+     >*{
+        display: flex;
+        align-items: center;
+     }
+
+     >.edit-mail-btns{
+        display: none;
+     }
+     &:hover{
+        .edit-mail-btns{
+            display: flex;
+        }
+        .mail-date{
+            display: none;
+        }
+     }
+
  }
