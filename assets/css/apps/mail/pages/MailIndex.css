@@ -1,8 +1,8 @@
- /* mail index  */
+/* mail index  */
 
- .mail-index {
-    height: 100vh;
-    max-height: 100vh;
+.mail-index {
+    height: 100%;
     font-family: Google Sans;
     background-color: rgba(248, 250, 253, 1);
- }
+    padding: 0 20px;
+}

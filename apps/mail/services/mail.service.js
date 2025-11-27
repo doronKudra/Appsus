@@ -5,7 +5,7 @@ import { storageService } from '../../../services/async-storage.service.js'
 
 
 // localStorage.clear()
-const months = ['jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const MAIL_KEY = 'mails'
 
 // const mail = {
@@ -20,10 +20,10 @@ const MAIL_KEY = 'mails'
 //     to: 'user@appsus.com'
 // }
 
-// const loggedinUser = {
-//     email: 'user@appsus.com',
-//     fullname: 'Mahatma Appsus'
-// }
+const loggedinUser = {
+    mail: 'user@appsus.com',
+    name: 'Mahatma Appsus'
+}
 
 
 const sender = { name: 'Momo', mail: 'momo@momo.com' }
@@ -37,6 +37,7 @@ export const mailService = {
     remove,
     save,
     getSentTime,
+    getMailTemplate,
     months,
     // getEmptyMail,
     // getDefaultFilter,
@@ -78,18 +79,20 @@ function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = [
-            _createMail(sender, "subject1", utilService.makeLorem(10), false),
-            _createMail(sender, "subject2", utilService.makeLorem(15), true),
-            _createMail(sender, "subject3", utilService.makeLorem(20), true),
-            _createMail(sender, "subject4", utilService.makeLorem(25), false)
+            _createMail(sender, loggedinUser, "subject1", utilService.makeLorem(10), false),
+            _createMail(sender, loggedinUser, "subject2", utilService.makeLorem(15), true),
+            _createMail(sender, loggedinUser, "subject3", utilService.makeLorem(20), true),
+            _createMail(sender, loggedinUser, "subject4", utilService.makeLorem(25), false),
+            _createMail(loggedinUser, sender, "subject4", utilService.makeLorem(25), false),
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }
 }
 
-function _createMail(sender, subject, body, isRead) {
+function _createMail(from, to, subject, body, isRead) {
     const mail = {
-        sender,
+        from,
+        to,
         subject,
         body,
         isRead,
@@ -110,14 +113,16 @@ function getSentTime(time) { // time = 176416405...
     }
 }
 
-// function getEmptyMail(from = '', subject = '', body = '') {
-//     return {
-//         from,
-//         subject,
-//         body,
-//         sentAt: Date.now()
-//     }
-// }
+function getMailTemplate(to,subject,body) {
+    return {
+        from:loggedinUser,
+        to:{name:sender.name},
+        subject,
+        body,
+        isRead:true,
+        sentAt: Date.now(),
+    }
+}
 
 // function getDefaultFilter() {
 //     return { txt: '', minSpeed: '' }
