@@ -1,0 +1,6 @@
+
+body: rgba(248, 250, 253, 1)
+read mails: rgba(242, 246, 252, 1)
+mail-list: white
+search: rgba(233, 238, 246, 1)
+mail content: #5F6368

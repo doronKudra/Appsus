@@ -18,14 +18,10 @@ export function MailList({ mails ,onRead, onDelete}) {
     if (!mails.length) return <div>No Mails To Show...</div>
     return (
         <React.Fragment>
-            <div>Mail list</div>
             <ul className="mail-list">
                 {mails.map(mail => 
-                    <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'read':''}`} key={mail.id}>
-                        <MailPreview
-                         mail={mail} 
-                         onCheckBox={(ev)=> onCheckBox(ev, mail.id)} 
-                         onDelete={(ev)=> onDelete(ev,mail.id)}/>
+                    <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'mail-read':''}`} key={mail.id}>
+                        <MailPreview mail={mail} onCheckBox={(ev)=> onCheckBox(ev, mail.id)} onDelete={(ev)=> onDelete(ev,mail.id)}/>
                     </li>
                 )}
             </ul>

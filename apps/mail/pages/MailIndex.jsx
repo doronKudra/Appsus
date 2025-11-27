@@ -11,7 +11,7 @@ export function MailIndex() {
 
     const [mails, setMails] = useState(null)
     const navigate = useNavigate()
-
+    console.log('mails:',mails)
 
     useEffect(() => {
         loadMails() 
@@ -41,7 +41,7 @@ export function MailIndex() {
         return <div>Loading...</div>
     }
     return (
-        <main className="mails-page">
+        <main className="mail-index">
             <MailHeader />
             <MailList mails={mails} onRead={onRead} onDelete={onDelete}/>
         </main>

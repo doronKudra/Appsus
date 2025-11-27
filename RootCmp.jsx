@@ -15,7 +15,7 @@ import { NoteIndex } from "./apps/note/pages/NoteIndex.jsx"
 export function App() {
     return <Router>
         <section className="app">
-            <AppHeader />
+            {/* <AppHeader /> */}
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />

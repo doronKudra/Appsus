@@ -53,7 +53,6 @@ function query(filterBy = {}) {
             if (filterBy.subject) {
                 mails = mails.filter(mail => mail.speed >= filterBy.minSpeed)
             }
-            console.log(' mails:', mails)
             return mails
         })
 }
@@ -79,10 +78,10 @@ function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = [
-            _createMail(sender, "subject1", utilService.makeLorem(10), 'false'),
-            _createMail(sender, "subject2", utilService.makeLorem(15), 'true'),
-            _createMail(sender, "subject3", utilService.makeLorem(20), 'true'),
-            _createMail(sender, "subject4", utilService.makeLorem(25), 'false')
+            _createMail(sender, "subject1", utilService.makeLorem(10), false),
+            _createMail(sender, "subject2", utilService.makeLorem(15), true),
+            _createMail(sender, "subject3", utilService.makeLorem(20), true),
+            _createMail(sender, "subject4", utilService.makeLorem(25), false)
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }

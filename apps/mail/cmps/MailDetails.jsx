@@ -11,21 +11,21 @@ export function MailDetails() {
     const [mail, setMail] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
-
+    console.log('params:',params)
 
     useEffect(() => {
         loadMail()
-    }, [params.bookId])
+    }, [params.mailId])
 
     function loadMail() {
         mailService.get(params.mailId)
         .then(mail => {
             if (!mail.isRead) {
-                console.log('1:',1)
                 mail.isRead = true
-                mailService.save(mail)
+                mailService.save(mail).then(()=>setMail(mail))
+            }else{
+                setMail(mail)
             }
-            setMail(mail)
         })
     }
 
