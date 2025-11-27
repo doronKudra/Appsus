@@ -1,13 +1,16 @@
  /* rgb(242,246,252) */
- 
- .mail-list{
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-}
 
-.mail-container{
-    display: flex;
-    align-items: center;
-}
+ .mail-list {
+     margin: 0;
+     display: flex;
+     flex-direction: column;
+     background-color: white;
+ }
+
+ .mail-container {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     border-bottom: 1px solid rgb(203, 203, 203);
+
+ }

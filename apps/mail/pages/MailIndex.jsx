@@ -1,7 +1,7 @@
 import { mailService } from "../services/mail.service.js"
 import { MailHeader } from "../cmps/MailHeader.jsx"
 import { MailList } from "../cmps/MailList.jsx"
-
+import { MailCompose } from "../cmps/MailCompose.jsx"
 
 const { useEffect, useState } = React
 const { useNavigate } = ReactRouterDOM
@@ -10,12 +10,13 @@ const { useNavigate } = ReactRouterDOM
 export function MailIndex() {
 
     const [mails, setMails] = useState(null)
+    const [isCompose, setIsCompose] = useState(false)
     const navigate = useNavigate()
     console.log('mails:',mails)
 
     useEffect(() => {
         loadMails() 
-    }, [])
+    }, [isCompose])
 
     function loadMails() {
         mailService.query()
@@ -37,6 +38,10 @@ export function MailIndex() {
         console.log('deleted',mailId)
     }
 
+    function onCompose() {
+        setIsCompose(isCompose => !isCompose)
+    }
+
     if (!mails) {
         return <div>Loading...</div>
     }
@@ -44,6 +49,8 @@ export function MailIndex() {
         <main className="mail-index">
             <MailHeader />
             <MailList mails={mails} onRead={onRead} onDelete={onDelete}/>
+            <button onClick={onCompose}>Compose</button>
+            {isCompose && <MailCompose onCompose={onCompose}/>}
         </main>
     )
 }
