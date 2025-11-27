@@ -1,0 +1,35 @@
+.mail-compose {
+    width: 40vw;
+    max-width: 550px;
+    height: 40vh;
+
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    position: absolute;
+    bottom: 0;
+    right: 30px;
+    box-shadow: 0 5px 8px;
+    padding: 5px;
+
+    .compose-top {
+        display: flex;
+        justify-content: space-between;
+        background-color: rgb(248, 250, 253);
+    }
+
+    .mail-form {
+        height: 100%;
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-rows: max-content max-content 1fr max-content;
+
+        >* {
+            border: 0;
+            border-bottom: 1px solid rgb(203, 203, 203);
+        }
+
+        textarea[name="body"]{
+            vertical-align: top;
+        }
+    }
+}
