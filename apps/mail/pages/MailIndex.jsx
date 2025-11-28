@@ -14,14 +14,14 @@ export function MailIndex() {
     const [mails, setMails] = useState(null)
     const [isCompose, setIsCompose] = useState(false)
     const [folderName, setFolderName] = useState('inbox')
-    console.log('folderName:', folderName)
+
     const [unreadCount, setUnreadCount] = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
         loadMails()
     }, [isCompose])
-    
+
     useEffect(() => {
         loadMails()
     }, [folderName])
@@ -34,9 +34,9 @@ export function MailIndex() {
     function loadMails() {
         mailService.query()
             .then(mails => {
-                console.log('mails:',mails)
+                console.log('mails:', mails)
                 const fillteredMails = mailService.getFilterByFolder(folderName, mails)
-                setMails(fillteredMails||[])
+                setMails(fillteredMails || [])
             })
             .catch(err => alert(`from loadMails ${err}`))
     }
@@ -80,20 +80,23 @@ export function MailIndex() {
         setIsCompose(isCompose => !isCompose)
     }
 
-    if (!mails) {
-        return <div>Loading...</div>
-    }
+    // if (!mails) {
+    //     return <div className="mail-loading">Loading...</div>
+    // }
 
     return (
         <main className="mail-index">
             <MailHeader unreadCount={unreadCount} />
-            <MailFolderList onCompose={onCompose} setFolderName={setFolderName} />
-            <MailList
-                mails={mails}
-                onRead={onRead}
-                onDelete={onDelete}
-                onReadUnread={onReadUnread}
-                onStarred={onStarred} />
+            <MailFolderList onCompose={onCompose} setFolderName={setFolderName}  unreadCount={unreadCount}/>
+            {mails ?
+                <MailList
+                    mails={mails}
+                    onRead={onRead}
+                    onDelete={onDelete}
+                    onReadUnread={onReadUnread}
+                    onStarred={onStarred} />
+                :
+                <div className="mail-loading">Loading...</div>}
             {isCompose && <MailCompose onCompose={onCompose} />}
         </main>
     )

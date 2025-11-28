@@ -2,10 +2,8 @@
 .mail-header{
     display: flex;
     align-items: center;
-    justify-content:start;
-    height: 65px;
-    /* justify-content: space-between; */
-
+    justify-content: space-between;
+    border-bottom: 1px solid;
 
     >div{
         display: flex;

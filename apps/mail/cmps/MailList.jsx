@@ -6,7 +6,7 @@ const { useEffect, useState } = React
 
 export function MailList({ mails ,onRead, onDelete, onReadUnread, onStarred}) {
 
-    if (!mails.length) return <div>No Mails To Show...</div>
+    if (!mails.length) return <div className="mail-loading">No Mails To Show...</div>
     return (
         <React.Fragment>
             <ul className="mail-list">

@@ -109,7 +109,9 @@ function getSentTime(time) { // time = 176416405...
     const timeDiff = new Date(sentAt) - time
 
     if (timeDiff < 86400000) {
-        return `${sentAt.getHours()}:${sentAt.getMinutes()}`
+        const hour = sentAt.getHours()
+        const AMPM = hour>=12?'PM':'AM'
+        return `${hour}:${sentAt.getMinutes()} ${AMPM}`
     } else {
         return `${mailService.months[sentAt.getMonth()]} ${sentAt.getDate()}`
     }

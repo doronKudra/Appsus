@@ -2,11 +2,13 @@
     box-sizing: border-box;
 }
 
+html{
+    font-family:"Roboto", "Google Sans";
+}
+
 body {
     margin: 0;
     height: 100vh;
-    font-family: Google Sans, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* width: 100vw; */
 }
 
 h1,

@@ -1,13 +1,16 @@
 /* mail index  */
 
 .mail-index {
-    height: calc(100vh - 52px);
-    /* font-family: Google Sans; */
-    background-color: rgba(248, 250, 253, 1);
+    height: calc(100vh - 65px);
+    color: rgb(43, 43, 43);
+    
+    background-color: white;
+
+    /* background-color: rgba(248, 250, 253, 1); */
 
     display: grid;
-    grid-template-columns: 80px 1fr 65px;
-    grid-template-rows: 55px 1fr 55px;
+    grid-template-columns: 72px 1fr 65px;
+    grid-template-rows: 88px 1fr 55px;
 
     >.mail-header {
         grid-column: 2 / 3;
@@ -21,5 +24,14 @@
         grid-row: 1/4;
     }
 
+    .mail-loading {
+        grid-column: 2 / 3;
+    }
+}
 
+.mail-loading {
+    width: 100%;
+    margin-top: 30px;
+    font-size: xxx-large;
+    text-align: center;
 }

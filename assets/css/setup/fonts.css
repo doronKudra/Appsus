@@ -2,12 +2,12 @@
 @font-face {
     font-family: "Google Sans";
     font-style: normal;
-    font-weight: 400;
-    src: '../fonts/GoogleSansFlex.ttf';
-	unicode-range: U+308, U+530-58F, U+2010, U+2024, U+25CC, U+FB13-FB17;
+    /* font-weight: 400; */
+    src: url('../../fonts/GoogleSansFlex.ttf');
+	/* unicode-range: U+308, U+530-58F, U+2010, U+2024, U+25CC, U+FB13-FB17; */
 }
 
 @font-face {
-	font-family: "Roboto";
-	src:'../fonts/Roboto-Regular.ttf';
+    font-family: "Roboto";
+    src: url('../../fonts/Roboto-Regular.ttf');
 }

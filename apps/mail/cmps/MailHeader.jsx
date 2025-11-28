@@ -8,8 +8,8 @@ export function MailHeader({unreadCount}) {
             <nav>
                 <button className="clear-storage" onClick={() => localStorage.clear()}>Delete local storage</button>
             </nav>
-            <h3>{unreadCount?unreadCount + 'Unread Mails' : '0 Unread Mails'}</h3>
             <input id="searchMail" type="text" />
+            <h3>{unreadCount?unreadCount + ' Unread' : '0 Unread'}</h3>
         </header>
     )
 }
