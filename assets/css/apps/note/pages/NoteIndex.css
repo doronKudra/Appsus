@@ -1,5 +1,6 @@
 .note-index * {
     font-family: "Google Sans", "Roboto", arial, sans-serif;
+
     input {
         border: none;
         width: 95%;
@@ -16,7 +17,7 @@
 
 }
 
-.note-index{
+.note-index {
     padding-left: 80px;
     padding-top: 40px;
 }
@@ -59,20 +60,77 @@
     max-height: none;
 }
 
-.note-name-edit{
+.note-name-edit {
     font-size: 1.25rem;
 }
 
-.note-text-edit{
+.note-text-edit {
     font-size: 1rem;
 }
 
-.note-layout{
+.note-layout {
     max-width: 240px;
 }
 
-.filter-bar{
+.filter-bar {
     position: absolute;
     width: 80px;
     height: 90vh;
+}
+
+.note-todos {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+
+    input {
+        margin: 0;
+        width: auto;
+    }
+}
+
+.note-todos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin-block: 10px;
+}
+
+.note-actions-bar {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out 0.1s;
+    position: fixed;
+    bottom: 0;
+    opacity: 1;
+}
+
+.note-preview:hover {
+    .note-actions-bar {
+        display: flex;
+
+    }
+}
+
+.filter-bar {
+    display: none;
+}
+
+.note-options {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    input {
+        opacity: 1;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+    }
+
+    input#file-upload-button {
+        display: none;
+    }
 }
