@@ -3,9 +3,64 @@
     height: calc(100vh - 65px);
     grid-template-columns: 72px 1fr 65px;
     grid-template-rows: 88px 1fr 55px;
+    background-color: rgb(248, 250, 253);
 
-    >.details-container{
+
+    >.details-container {
+        background-color: #fff;
+        border-radius: 20px;
+
+
+        padding: 30px;
         grid-column: 2/3;
         grid-row: 2/3;
+
+        .from-details {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .to-details {
+            margin-top: 5px;
+            font-size: medium;
+        }
+
+        h5 {
+            margin-top: 5px;
+            font-size: small;
+        }
+
+        p {
+            color: rgb(46, 46, 46);
+        }
+
+        button {
+            color: white;
+            padding: 5px 10px;
+            font-family: 'Roboto';
+            font-size: large;
+            border-radius: 10px;
+            border: 0;
+            background-color: rgb(47, 96, 219);
+
+            &:hover {
+                filter: brightness(0.9);
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgb(118, 118, 118);
+            }
+        }
+
+        .mail-details-h {
+            width: max-content;
+            padding: 5px 15px;
+            box-shadow: 0 2px 4px rgb(118, 118, 118);
+            border-radius: 10px;
+
+            color: white;
+            background-color: rgb(47, 96, 219);
+
+        }
     }
 }

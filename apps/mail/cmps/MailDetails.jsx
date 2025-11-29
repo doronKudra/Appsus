@@ -17,31 +17,28 @@ export function MailDetails() {
 
     function loadMail() {
         mailService.get(params.mailId)
-            .then(mail => {
-                if (!mail.isRead) {
-                    mail.isRead = true
-                    mailService.save(mail).then(() => setMail(mail))
-                } else {
-                    setMail(mail)
-                }
-            })
+            .then(mail => setMail(mail))
     }
 
     function onBack() {
         navigate('/mail')
     }
-
     if (!mail) return (
         <section className="mail-details">
-            <div className="mail-loading">Loading...</div>
+            <section className="details-container">
+                <div className="mail-loading">Loading...</div>
+            </section>
         </section>
     )
     return (
         <section className="mail-details">
             <section className="details-container">
-                <h3>Mail Details:</h3>
-                <h2>{mail.from.name}</h2>
-                <h3>{mail.from.mail}</h3>
+                <h3 className="mail-details-h">Mail Info</h3>
+                <section className="from-details">
+                    <h2>from: {mail.from.mail === mailService.loggedinUser.mail ? 'Me' : mail.from.name}</h2>
+                    <h3>{mail.from.mail}</h3>
+                </section>
+                <h3 className="to-details">Sent to: {mail.to.mail===mailService.loggedinUser.mail?'Me':mail.to.mail}</h3>
                 <h5>{mailService.getSentTime(mail.sentAt)}</h5>
                 <p>{mail.body}</p>
                 <button onClick={onBack}>back</button>

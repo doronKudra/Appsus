@@ -1,24 +1,74 @@
-
-.mail-header{
+.mail-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 30px;
     border-bottom: 1px solid;
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    padding: 0 10px;
 
-    >div{
-        display: flex;
-        .logo{
-            padding: 0 30px 0 10px;
+    .mail-search-container {
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+    }
+
+    input:focus,
+    select:focus {
+        outline: 0;
+    }
+
+    select {
+        font-size: medium;
+        background-color: #E9EEF6;
+        border: 0;
+        padding: 8px;
+        border-radius: 50px;
+        cursor: pointer;
+        >*{
+            outline: 0;
+        }
+    }
+
+    input {
+        font-size: medium;
+        background-color: #E9EEF6;
+        border: 0;
+
+        padding: 15px 40px 15px 50px;
+        border-radius: 50px;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .clear-txt-btn,.search-symbol{
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        border: 0;
+        border-radius: 50%;
+        right: 5px;
+        top: 50%;
+        background-color: #E9EEF6;
+
+        &:hover{
+            cursor: pointer;
+            background-color: #bfc0c1;
         }
 
-        >input{
+        translate: 0 -50%;
+        >img{
             width: 100%;
         }
     }
 
-    >.clear-storage{
-        position: absolute;
-        top: 65px;
-        
+    .search-symbol{
+        left: 5px;
+        &:hover{
+            cursor:default;
+         
+            background-color: #E9EEF6;
+        }
     }
 }

@@ -3,14 +3,11 @@
 .mail-index {
     height: calc(100vh - 65px);
     color: rgb(43, 43, 43);
-    
-    background-color: white;
-
-    /* background-color: rgba(248, 250, 253, 1); */
+    background-color: rgb(248, 250, 253);
 
     display: grid;
     grid-template-columns: 72px 1fr 65px;
-    grid-template-rows: 88px 1fr 55px;
+    grid-template-rows: 102px 1fr 55px;
 
     >.mail-header {
         grid-column: 2 / 3;
