@@ -2,6 +2,7 @@
 import { NoteTxt } from './NoteTxt.jsx'
 import { NoteImg } from './NoteImg.jsx'
 import { NoteTodos } from './NoteTodos.jsx'
+import { NoteVideo} from './NoteVideo.jsx'
 
 export function NotePreview({ note, onRemoveNote, onPinNote, onDuplicateNote, onMarkNote}) {//
     return (
@@ -26,5 +27,7 @@ function DynamicCmp(props) {
             return (<NoteImg note={note} />)
         case 'NoteTodos':
             return (<NoteTodos note={note} onMarkNote={onMarkNote} />)
+        case 'NoteVideo':
+            return (<NoteVideo note={note} />)
     }
 }

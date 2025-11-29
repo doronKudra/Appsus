@@ -24,7 +24,7 @@
 
 .note-title {
     font-size: 1.25rem;
-    font-weight: 100;
+    font-weight: 350;
     margin-block: 0.25rem;
 }
 
@@ -72,22 +72,67 @@
     max-width: 240px;
 }
 
-.filter-bar {
+.filter-bar-notes {
+    display: grid;
+    grid-template-columns: 80px 0px;
+    justify-items: center;
     position: absolute;
-    width: 80px;
+    background-color: aliceblue;
+    z-index: 1;
     height: 90vh;
+    transition: grid-template-columns 0.2s ease-in-out 0.1s;
+}
+
+.filter-bar-notes:hover{
+    grid-template-columns: 80px 200px;
+    .note-item-label{
+        visibility: visible;
+    }
+}
+
+.filter-search-notes{
+    position: absolute;
+    place-self: center;
+    display: block;
+    top: 5px;
+    margin-top: 10px;
+    button{
+        background: none;
+        border: none;
+        width: 32px;
+        height: 24px;
+        color: gray;
+    }
+    button:hover{
+        cursor: pointer;
+    }
+}
+
+.search-txt-box-notes{
+
+    height: 36px;
+    font-size: 20px;
+    width: 50%;
+    background: none;
+    border: none;
 }
 
 .note-todos {
     display: flex;
     width: 100%;
     position: relative;
-    justify-content: space-between;
-
+    justify-content: start;
+    gap: 5px;
     input {
         margin: 0;
         width: auto;
     }
+}
+
+.note-options{
+    display: flex;
+    gap: 16px;
+    padding-right: 20px;
 }
 
 .note-todos-container {
@@ -109,13 +154,8 @@
 
 .note-preview:hover {
     .note-actions-bar {
-        display: flex;
-
+        display: flex
     }
-}
-
-.filter-bar {
-    display: none;
 }
 
 .note-options {
@@ -131,6 +171,7 @@
 }
 
 .upload-img-note{
+    margin-top: 1px;
     width: 35px;
     height: 35px;
     place-content: center;
@@ -151,15 +192,37 @@
     place-content: center;
 }
 
-.note-options{
-    display: flex;
-    gap: 8px;
-}
+
 
 .note-options *{
-    opacity: 0.75;
+    opacity: 0.6;
 }
 
 .note-options *:hover{
     opacity: 1;
+}
+
+.yt-note-btn{
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    place-content: center;
+}
+
+.chosen-filter{
+    background-color: rgb(255, 240, 196)
+}
+
+.filter-search-notes{
+    width: 100%;
+}
+
+.filter-search-notes-form{
+    place-self: center;
+    width: 50%;
+}
+
+.note-item-label{
+    visibility: hidden;
+    transition: visibility 0.3s ease-in-out;
 }

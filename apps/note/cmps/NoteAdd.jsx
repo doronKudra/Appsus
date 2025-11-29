@@ -7,8 +7,9 @@ export function NoteAdd({ onAddNote }) {
 	const [imgSrc, setImgSrc] = useState('')
 	const [type, setType] = useState('NoteTxt')
 	const [items, setItems] = useState([])
+	const [videoLink, setVideoLink] = useState('')
 	const wrapperRef = useRef(null)
-	var note = { type, isPinned: false, info: { items,title, txt, tags: {} }, style: {}, createdAt: Date.now() }
+	var note = { type, isPinned: false, info: { videoLink, items, title, txt, tags: {} }, style: {}, createdAt: Date.now() }
 	useEffect(() => {
 		if (!isEdit) return
 
@@ -33,6 +34,7 @@ export function NoteAdd({ onAddNote }) {
 	function openEditor(type = 'NoteTxt') {
 		setType(type)
 		note.info.items = []
+		setVideoLink('')
 		setImgSrc('')
 		setIsEdit(true)
 	}
@@ -67,14 +69,14 @@ export function NoteAdd({ onAddNote }) {
 		const isEmpty = !title.trim() && !txt.trim() && !imgSrc && !note.info.items.length
 		if (!isEmpty && typeof onAddNote === 'function') {
 			note.type = type
-			if(note.info.items.length) {
-				note.info.items.push({txt,isMarked: false})
+			if (note.info.items.length) {
+				note.info.items.push({ txt, isMarked: false })
 				setItems(note.info.items)
 			}
 			compressImage(imgSrc)
-			
+
 			onAddNote(note)
-			
+
 		}
 		setType('NoteTxt')
 		setImgSrc('')
@@ -113,9 +115,12 @@ export function NoteAdd({ onAddNote }) {
 			<div className="new-note" onClick={(ev) => openEditor('NoteTxt')}>
 				<div className="text-box-cosmetic">Write a note...</div>
 				<div className="note-options">
-					<div>
+					<div className="yt-note-btn fa-brands fa-youtube" onClick={(ev) => {
+						onAddSpecialNote(ev)
+						openEditor('NoteVideo')
+					}}></div>
+					<div className="upload-img-note fa-solid fa-image">
 						<label onClick={onAddSpecialNote} className="upload-img-note-label" htmlFor="imageInput">
-							<div className="upload-img-note fa-solid fa-image"></div>
 							<input onChange={getImage} onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
 						</label>
 					</div>
@@ -123,6 +128,7 @@ export function NoteAdd({ onAddNote }) {
 						onAddSpecialNote(ev)
 						openEditor('NoteTodos')
 					}}></div>
+
 				</div>
 			</div>
 		)
@@ -139,19 +145,19 @@ export function NoteAdd({ onAddNote }) {
 				className="note-name-edit"
 				placeholder="Name"
 				value={title}
-				onChange={(ev) => setTitle(ev.target.value)}/>
+				onChange={(ev) => setTitle(ev.target.value)} />
 			{(type === 'NoteTodos')
 				&& (!!items.length)
 				&& (items.map((item, idx) => (<input
-					className={"note-text-edit edit-list-item-"+idx}
-					key={"edit-list-item-"+idx}
+					className={"note-text-edit edit-list-item-" + idx}
+					key={"edit-list-item-" + idx}
 					placeholder="To Do..."
 					value={item.txt}
 					onChange={(ev) => {
 						note.info.items[idx].txt = ev.target.value
 						setItems([...note.info.items])
 					}}
-					/>)))}
+				/>)))}
 			{(<input
 				className="note-text-edit"
 				autoFocus
@@ -160,10 +166,19 @@ export function NoteAdd({ onAddNote }) {
 				value={txt}
 				onChange={(ev) => setTxt(ev.target.value)}
 			/>)}
-			{(type === 'NoteTodos') && 
+			{(type === 'NoteVideo') && (<input
+				autoFocus
+				className="note-video-link-edit"
+				placeholder="Youtube Link"
+				value={videoLink}
+				onChange={(ev) => setVideoLink(ev.target.value.replace('watch?v=', 'embed/'))} />)}
+			{videoLink && (
+				<iframe src={videoLink} width="600" height="338" frameBorder="0"></iframe>
+			)}
+			{(type === 'NoteTodos') &&
 				(<button type="button" onClick={(ev) => {
 					onAddSpecialNote(ev)
-					setItems([...items, {txt,isMarked: false}])
+					setItems([...items, { txt, isMarked: false }])
 					setTxt('')
 					console.log(note)
 				}}>Add Line</button>)}
