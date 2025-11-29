@@ -4,9 +4,9 @@ import { NoteImg } from './NoteImg.jsx'
 import { NoteTodos } from './NoteTodos.jsx'
 import { NoteVideo} from './NoteVideo.jsx'
 
-export function NotePreview({ note, onRemoveNote, onPinNote, onDuplicateNote, onMarkNote}) {//
+export function NotePreview({ note ,onRemoveNote, onPinNote, onDuplicateNote, onMarkNote}) {//
     return (
-        <div className="note-preview">
+        <div className={"note-preview"}>
             <DynamicCmp note={note} onMarkNote={onMarkNote}/>
             <div className="note-actions-bar">
                 <div onClick={() => onRemoveNote(note.id)} className="icon-notes fa-solid fa-trash"></div>

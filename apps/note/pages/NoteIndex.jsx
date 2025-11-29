@@ -12,7 +12,7 @@ const { Link } = ReactRouterDOM
 export function NoteIndex() {
 
     const [notes, setNotes] = useState(null)
-    const [filterBy, setFilterBy] = useState()
+    const [filterBy, setFilterBy] = useState({})
     const [isLoading, setIsLoading] = useState(false)
 
     const setExistingSearchPrms = useSearchParamsFilter(setFilterBy)
@@ -57,8 +57,12 @@ export function NoteIndex() {
             .then(() => loadNotes())
     }
 
-    function onSetFilter({txt,type,tag}){
-        
+    function onSetFilter({txt,type}){
+        if(txt === '' && type === '') setFilterBy({})
+        else if(txt === '') setFilterBy({type})
+        else if(type === '') setFilterBy({txt})
+        else setFilterBy({txt,type})
+        loadNotes()
     }
 
     function onPinNote(note){

@@ -19,13 +19,10 @@ function query(filterBy = {}) {
         .then(notes => {
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
-                notes = notes.filter(note => regExp.test(note.title) || regExp.test(note.text))
+                notes = notes.filter(note => regExp.test(note.info.title) || regExp.test(note.info.txt))
             }
             if (filterBy.type) {
                 notes = notes.filter(note => note.type === filterBy.type)
-            }
-            if (filterBy.tag){
-                notes = notes.filter(note => filterBy.tag in note.tags)
             }
             return notes
         })
@@ -59,9 +56,12 @@ function _createNotes() {
     let notes = utilService.loadFromStorage(NOTE_KEY)
     if (!notes || !notes.length) {
         notes = [
+            _createNote('NoteTxt',true,{title:'Somewhere',txt:'Over the rainbow',tags:'music'},{},Date.now() - 10*1000*60),
+            _createNote('NoteImg',false,{title:'Capybara',tags:'funny', imgSrc: 'assets/img/Capybara.jpg'},{},Date.now() - 20*1000*60),
             _createNote('NoteTxt',false,{title:'Hello There',txt:'Somebody',tags:'fashion'},{},Date.now() - 5*1000*60),
-            _createNote('NoteTxt',false,{title:'Somewhere',txt:'Over the rainbow',tags:'music'},{},Date.now() - 10*1000*60),
-            _createNote('NoteTxt',false,{title:'Very Good',txt:'Very Nice',tags:'funny'},{},Date.now() - 15*1000*60)
+            _createNote('NoteImg',false,{title:'What?',tags:'funny', imgSrc: 'assets/img/Capybara2.jpg'},{},Date.now() - 30*1000*60),
+            _createNote('NoteVideo',false,{title:'Funny Video', tags:'funny', videoLink:'https://www.youtube.com/embed/J9E0DLwDSSs'},{},Date.now() - 50*1000*60),
+            _createNote('NoteTodos',false,{title:'What?',tags:'funny', items: [{txt:'Fix bugs',isMarked:true},{txt:'Add Capybara',isMarked:true},{txt:'Edit Notes',isMarked:false}]},{},Date.now() - 30*1000*60),
         ]
         utilService.saveToStorage(NOTE_KEY, notes)
     }
@@ -76,12 +76,8 @@ function _createNote(type,isPinned,info,style,createdAt) {
 function getFilterFromSearchParams(searchParams) {
     const txt = searchParams.get('txt') || ''
     const type = searchParams.get('type') || ''
-    const tag = searchParams.get('tag') || ''
-    const color = searchParams.get('color') || ''
     return {
         txt,
         type,
-        tag,
-        color,
     }
 }

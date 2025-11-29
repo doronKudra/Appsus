@@ -4,7 +4,7 @@ import { NotePreview } from "./NotePreview.jsx";
 
 export function NoteList({ loadingClass, notes: notes, onRemoveNote, onPinNote ,onDuplicateNote, onMarkNote}) {
 
-    if (!notes.length) return <div>No notes To Show...</div>
+    if (!notes.length) return <div className="no-notes-message">No notes To Show...</div>
     const pinnedNotes = (notes.filter((note) => note.isPinned).length)
     const isShowPinned = !!pinnedNotes
     const isShowUnpinned = (notes.length === pinnedNotes) ? false : true
