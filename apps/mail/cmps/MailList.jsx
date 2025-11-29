@@ -11,7 +11,7 @@ export function MailList({ mails ,onRead, onDelete, onReadUnread, onStarred}) {
         <React.Fragment>
             <ul className="mail-list">
                 {mails.map(mail => 
-                    <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'mail-read':''}`} key={mail.id}>
+                    <li onClick={()=>onRead(mail)} className={`mail-container ${mail.isRead?'mail-read':''}`} key={mail.id}>
                         <MailPreview 
                         mail={mail} 
                         onDelete={(ev)=> onDelete(ev,mail)} 

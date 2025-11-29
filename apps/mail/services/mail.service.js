@@ -4,17 +4,11 @@ import { utilService } from '../../../services/util.service.js'
 import { storageService } from '../../../services/async-storage.service.js'
 
 
-// localStorage.clear()
+
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const MAIL_KEY = 'mails'
 
-/*
-filterBy = {
-    text,
 
-}
-
-*/
 const loggedinUser = {
     mail: 'user@appsus.com',
     name: 'Mahatma Appsus'
@@ -35,29 +29,22 @@ export const mailService = {
     getMailTemplate,
     getUnreadMails,
     getFilterByFolder,
+    filterByText,
+    sortBy,
+    loggedinUser,
     months,
+    MAIL_KEY,
     // getEmptyMail,
     // getDefaultFilter,
     // getFilterFromSearchParams
 }
 
-function query(filterBy = {}) {
+function query() {
     return storageService.query(MAIL_KEY)
-        .then(mails => {
-            if (filterBy.from) {
-                const regExp = new RegExp(filterBy.txt, 'i')
-                mails = mails.filter(mail => regExp.test(mail.vendor))
-            }
-            if (filterBy.subject) {
-                mails = mails.filter(mail => mail.speed >= filterBy.minSpeed)
-            }
-            return mails
-        })
 }
 
 function get(mailId) {
     return storageService.get(MAIL_KEY, mailId)
-    // .then(_setNextPrevMailId)
 }
 
 function remove(mailId) {
@@ -77,30 +64,34 @@ function _createMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
         mails = [
-            _createMail(sender, loggedinUser, "subject1", utilService.makeLorem(10)),
-            _createMail(sender, loggedinUser, "subject2", utilService.makeLorem(15)),
-            _createMail(sender, loggedinUser, "subject3", utilService.makeLorem(20)),
-            _createMail(sender, loggedinUser, "subject4", utilService.makeLorem(25)),
-            _createMail(loggedinUser, sender, "subject4", utilService.makeLorem(25)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(30)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(40)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(60)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(50)),
+            _createMail(loggedinUser, sender, utilService.makeLorem(3), utilService.makeLorem(20)),
+            _createMail(loggedinUser, sender, utilService.makeLorem(3), utilService.makeLorem(10)),
+            _createMail(loggedinUser, sender, utilService.makeLorem(3), utilService.makeLorem(30)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(25)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(25)),
+            _createMail(sender, loggedinUser, utilService.makeLorem(3), utilService.makeLorem(25)),
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }
 }
 
-function _createMail(from, to, subject, body, isRead) {
+function _createMail(from, to, subject, body) {
     const mail = {
         from,
         to,
         subject,
         body,
         sentAt: Date.now(),
-        isRead: false,
+        isRead: from===loggedinUser? true:false,
         isStarred: false,
         isDraft: false,
         id: utilService.makeId(),
         isDeleted: false,
     }
-    // mail.id = utilService.makeId()
     return mail
 }
 
@@ -111,10 +102,34 @@ function getSentTime(time) { // time = 176416405...
     if (timeDiff < 86400000) {
         const hour = sentAt.getHours()
         const AMPM = hour >= 12 ? 'PM' : 'AM'
-        return `${hour}:${sentAt.getMinutes()} ${AMPM}`
+        return `${hour}:${sentAt.getMinutes().toString().padStart(2,0)} ${AMPM}`
     } else {
         return `${mailService.months[sentAt.getMonth()]} ${sentAt.getDate()}`
     }
+}
+
+function sortBy(option,mails) {
+    console.log('option:',option)
+    let sorted
+    if (option === 'oldest') {
+        sorted = mails.sort((a,b)=> b.sentAt - a.sentAt)
+    } else if (option === 'newest') {
+        sorted = mails.sort((a,b)=> a.sentAt - b.sentAt)
+    } else if (option === 'title-a') {
+        sorted = mails.sort((a,b)=> a.subject.localeCompare(b.subject))
+    }else if (option === 'title-z') {
+        sorted = mails.sort((a,b)=> b.subject.localeCompare(a.subject))
+    }
+
+    return sorted
+}
+
+function filterByText(txt, mails) {
+    console.log('mails,txt:',mails,txt)
+    let filtered
+    const regExp = new RegExp(txt, 'i')
+    filtered = mails.filter(mail => regExp.test(mail.subject) || regExp.test(mail.body)||regExp.test(mail.from.mail)||regExp.test(mail.from.name))
+    return filtered
 }
 
 function getMailTemplate(subject, body) {
@@ -123,11 +138,11 @@ function getMailTemplate(subject, body) {
         to: { name: sender.name, mail: '' },
         subject,
         body,
-        isRead: false,
+        isRead: true,
         isStarred: false,
         isDraft: false,
         isDeleted: false,
-        sentAt: Date.now(),//TODO - move it to compose
+        id: utilService.makeId(),
     }
 }
 
@@ -137,12 +152,12 @@ function getUnreadMails(mails) {
 }
 
 function getFilterByFolder(mode, mails) {
-    console.log('mode,mails:', mode, mails)
+    console.log('mails:',mails)
     const inboxFilter = { from: loggedinUser, isDraft: false, isDeleted: false }
     const sentFilter = { from: loggedinUser, isDeleted: false }
     const starredFliter = { isStarred: true, isDeleted: false }
     const trashFilter = { isDeleted: true }
-    const draftsFilter = { isDraft: true }
+    const draftsFilter = { isDraft: true,isDeleted: false }
     if (mode === 'inbox') {
         return mails.filter(mail => {
             return (
@@ -171,35 +186,16 @@ function getFilterByFolder(mode, mails) {
                 trashFilter.isDeleted === mail.isDeleted
             )
         })
-    }
+    } else if (mode === 'drafts') {
+        return mails.filter(mail =>{
+            return(
+                draftsFilter.isDraft === mail.isDraft &&
+                draftsFilter.isDeleted == mail.isDeleted
+            )
+        })
+    } else return mails
 
 }
 
-// function getInboxMails(mails) {
-// const inboxMails = mails.filter(mail => mail.to === )
-// }
-// function getDefaultFilter() {
-//     return { txt: '', minSpeed: '' }
-// }
-
-// function getFilterFromSearchParams(searchParams) {
-//     const txt = searchParams.get('txt') || ''
-//     const minSpeed = searchParams.get('minSpeed') || ''
-//     return {
-//         txt,
-//         minSpeed
-//     }
-// }
-
-// function _setNextPrevMailId(mail) {
-//     return query().then((mails) => {
-//         const mailIdx = mails.findIndex((currMail) => currMail.id === mail.id)
-//         const nextMail = mails[mailIdx + 1] ? mails[mailIdx + 1] : mails[0]
-//         const prevMail = mails[mailIdx - 1] ? mails[mailIdx - 1] : mails[mails.length - 1]
-//         mail.nextMailId = nextMail.id
-//         mail.prevMailId = prevMail.id
-//         return mail
-//     })
-// }
 
 

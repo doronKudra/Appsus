@@ -4,12 +4,22 @@ import { mailService } from "../services/mail.service.js"
 
 export function MailPreview({ mail, onDelete, onReadUnread, isRead,onStarred}) {
 
+    function getFrom(mail) {
+        if(mail.isDraft){
+            return 'Draft'
+        } else if (mail.from.mail === mailService.loggedinUser.mail){
+            return 'Me'
+        } else{
+            return mail.from.name
+        }
+    }
+
 
     return (
         <React.Fragment>
             <section className="prev-sec-1">
                 <button onClick={onStarred}>{mail.isStarred?<i className="fa-solid fa-star" style={{color: "#FFD43B"}}></i>:<i className="fa-regular fa-star"></i>}</button>
-                <p className="mail-from">{mail.from.name}</p>
+                <p className="mail-from">{getFrom(mail)}</p>
             </section>
             <section className="prev-sec-2">
                 <p className="mail-subject">{mail.subject}  -</p>
