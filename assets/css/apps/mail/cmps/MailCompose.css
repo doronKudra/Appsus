@@ -1,7 +1,12 @@
 .mail-compose {
-    width: 40vw;
+    width: 60vw;
     max-width: 550px;
-    height: 40vh;
+    min-width: 250px;
+    height: 80vw;
+    min-height: 300px;
+    max-height: 550px;
+    border-radius: 10px 10px 0 0;
+    background-color: #fff;
 
     display: grid;
     grid-template-rows: max-content 1fr;
@@ -9,26 +14,76 @@
     bottom: 0;
     right: 30px;
     box-shadow: 0 5px 8px;
-    padding: 5px;
 
     .compose-top {
+        border-radius: 10px 10px 0 0;
+        width: 100%;
+        padding: 8px;
         display: flex;
         justify-content: space-between;
         background-color: rgb(248, 250, 253);
+
+        button {
+            border: 0;
+            background-color: inherit;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.108);
+                cursor: pointer;
+                box-shadow: 0 0 4px rgb(175, 175, 175);
+                border-radius: 5px;
+            }
+        }
     }
 
     .mail-form {
         height: 100%;
+        width: 100%;
         display: grid;
         grid-auto-flow: row;
         grid-template-rows: max-content max-content 1fr max-content;
+        padding: 8px 8px 14px;
 
-        >* {
+
+        >input,
+        textarea {
+            resize: none;
+            font-size: medium;
             border: 0;
             border-bottom: 1px solid rgb(203, 203, 203);
+
+            &:focus {
+                /* border: 0; */
+                outline: 0;
+                box-shadow: none;
+            }
         }
 
-        textarea[name="body"]{
+        textarea {
+            border-bottom: 0;
+        }
+
+        button {
+            border: 0;
+            width: 30%;
+            max-width: 150px;
+            background-color: rgb(47, 96, 219);
+            color: #fff;
+            border-radius: 18px;
+            padding: 8px;
+
+            &:hover {
+                filter: brightness(0.9);
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgb(118, 118, 118);
+
+            }
+
+        }
+
+        textarea[name="body"] {
+            font-size: medium;
+            font-family: Roboto, sans-serif;
             vertical-align: top;
         }
     }
