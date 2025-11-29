@@ -14,7 +14,7 @@ export function MailList({ mails ,onRead, onDelete, onReadUnread, onStarred}) {
                     <li onClick={()=>onRead(mail.id)} className={`mail-container ${mail.isRead?'mail-read':''}`} key={mail.id}>
                         <MailPreview 
                         mail={mail} 
-                        onDelete={(ev)=> onDelete(ev,mail.id)} 
+                        onDelete={(ev)=> onDelete(ev,mail)} 
                         onReadUnread={(ev)=> onReadUnread(ev,mail)} 
                         isRead={mail.isRead}
                         onStarred={(ev)=>onStarred(ev,mail)}/>

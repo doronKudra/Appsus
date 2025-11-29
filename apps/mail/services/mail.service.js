@@ -110,7 +110,7 @@ function getSentTime(time) { // time = 176416405...
 
     if (timeDiff < 86400000) {
         const hour = sentAt.getHours()
-        const AMPM = hour>=12?'PM':'AM'
+        const AMPM = hour >= 12 ? 'PM' : 'AM'
         return `${hour}:${sentAt.getMinutes()} ${AMPM}`
     } else {
         return `${mailService.months[sentAt.getMonth()]} ${sentAt.getDate()}`
@@ -162,13 +162,18 @@ function getFilterByFolder(mode, mails) {
         return mails.filter(mail => {
             return (
                 sentFilter.from.mail === mail.from.mail &&
-                sentFilter.isDeleted === mail.isDeleted 
+                sentFilter.isDeleted === mail.isDeleted
+            )
+        })
+    } else if (mode === 'trash') {
+        return mails.filter(mail => {
+            return (
+                trashFilter.isDeleted === mail.isDeleted
             )
         })
     }
+
 }
-
-
 
 // function getInboxMails(mails) {
 // const inboxMails = mails.filter(mail => mail.to === )

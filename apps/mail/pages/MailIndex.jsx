@@ -11,12 +11,17 @@ const { useNavigate } = ReactRouterDOM
 
 export function MailIndex() {
 
+    // const [allMails, setAllMails] = useState(null)
     const [mails, setMails] = useState(null)
     const [isCompose, setIsCompose] = useState(false)
     const [folderName, setFolderName] = useState('inbox')
 
     const [unreadCount, setUnreadCount] = useState(0)
     const navigate = useNavigate()
+
+    // useEffect(()=>{
+
+    // })
 
     useEffect(() => {
         loadMails()
@@ -31,10 +36,15 @@ export function MailIndex() {
         setUnreadCount(unreadCount => unreadCount = mails.filter(mail => !mail.isRead).length)
     }, [mails])
 
+    // function loadAllMails() {
+    //     mailService.query().then(mails=>{
+    //         setAllMails(mails)
+    //     })
+    // }
+
     function loadMails() {
         mailService.query()
             .then(mails => {
-                console.log('mails:', mails)
                 const fillteredMails = mailService.getFilterByFolder(folderName, mails)
                 setMails(fillteredMails || [])
             })
@@ -51,19 +61,31 @@ export function MailIndex() {
         ev.stopPropagation()
 
         const updatedMail = { ...mail, isRead: !mail.isRead }
-        mailService.save(updatedMail)
-
-        setMails(prevMails =>
-            prevMails.map(prevMail =>
-                prevMail.id === mail.id ? updatedMail : prevMail
+        mailService.save(updatedMail).then(() => {
+            setMails(prevMails =>
+                prevMails.map(prevMail =>
+                    prevMail.id === mail.id ? updatedMail : prevMail
+                )
             )
-        )
+        })
+
     }
 
-    function onDelete(ev, mailId) {
+    function onDelete(ev, mail) {
         ev.stopPropagation()
-        mailService.remove(mailId)
-        setMails((prevMails) => prevMails.filter(mail => mail.id !== mailId))
+        if (!mail.isDeleted) {
+            const updatedMail = { ...mail, isDeleted: true }
+            mailService.save(updatedMail).then(() => { loadMails() })
+            // setMails(prevMails =>
+            //     prevMails.map(prevMail =>
+            //         prevMail.id === mail.id ? updatedMail : prevMail
+            //     )
+            // )
+            // }).then(()=>loadMails())
+        } else {
+            console.log('removing...:')
+            mailService.remove(mail.id).then(()=>loadMails())
+        }
     }
 
     function onStarred(ev, mail) {
@@ -80,14 +102,10 @@ export function MailIndex() {
         setIsCompose(isCompose => !isCompose)
     }
 
-    // if (!mails) {
-    //     return <div className="mail-loading">Loading...</div>
-    // }
-
     return (
         <main className="mail-index">
             <MailHeader unreadCount={unreadCount} />
-            <MailFolderList onCompose={onCompose} setFolderName={setFolderName}  unreadCount={unreadCount}/>
+            <MailFolderList onCompose={onCompose} setFolderName={setFolderName} unreadCount={unreadCount} />
             {mails ?
                 <MailList
                     mails={mails}

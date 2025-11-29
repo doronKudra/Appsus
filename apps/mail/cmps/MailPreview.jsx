@@ -12,7 +12,7 @@ export function MailPreview({ mail, onDelete, onReadUnread, isRead,onStarred}) {
                 <p className="mail-from">{mail.from.name}</p>
             </section>
             <section className="prev-sec-2">
-                <p className="mail-subject">{mail.subject}-</p>
+                <p className="mail-subject">{mail.subject}  -</p>
                 <p className="mail-body">{mail.body}</p>
             </section>
             <p className="mail-date"> {mailService.getSentTime(mail.sentAt)}</p>
