@@ -7,7 +7,7 @@ export function NoteVideo({note}) {
         <div style={{ paddingBottom: '16px' }} className="note-content">
             <p className="note-title">{title}</p>
             <p className="note-txt">{txt}</p>
-            <iframe src={videoLink} width="240" height="135" frameBorder="0"></iframe>
+            <iframe src={videoLink} width="215" height="121" frameBorder="0"></iframe>
         </div>
     )
 }

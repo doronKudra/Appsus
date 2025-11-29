@@ -28,7 +28,7 @@ export function MailHeader({ unreadCount, filterByText, setFilterByText, setSort
             </select>
             <div className="mail-search-container">
                 <div className="search-symbol"><img src="./assets/img/search_46dp_434343_FILL0_wght400_GRAD0_opsz48.png"></img> </div>
-                <input value={filterByText} onChange={(ev) => onText(ev)} id="searchMail" type="text" />
+                <input value={filterByText} onChange={(ev) => onText(ev)} id="searchMail" type="text" placeholder="Search Mail" />
                 <button onClick={onClearTxt} className="clear-txt-btn"><img src="./assets/img/close_46dp_434343_FILL0_wght400_GRAD0_opsz48.png"></img> </button>
             </div>
         </header>
