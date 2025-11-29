@@ -57,7 +57,7 @@ export function NoteIndex() {
             .then(() => loadNotes())
     }
 
-    function onSetFilter({tag,type}){
+    function onSetFilter({txt,type,tag}){
         
     }
 

@@ -1,5 +1,8 @@
+const { useState, useRef, useEffect } = React
 
-export function NoteFilter({ setFilter }) {
+export function NoteFilter({ onSetFilter }) {
+
+    const [txt, setTxt] = useState('')
 
     function onSubmit(ev) {
 		ev.preventDefault()
@@ -16,7 +19,11 @@ export function NoteFilter({ setFilter }) {
             <div className="filter-search-notes">
                 <form className="filter-search-notes-form" onSubmit={onSubmit}>
                     <button name="search-btn-notes" className="fa-solid fa-magnifying-glass fa-lg"></button>
-                    <input name="search-input-notes" className="search-txt-box-notes" type='text' placeholder='Search Notes'></input>
+                    <input onChange={(ev) => {
+                        setTxt(ev.target.value)
+                        onSetFilter({txt})
+                        
+                    }} name="search-input-notes" className="search-txt-box-notes" type='text' placeholder='Search Notes'></input>
                 </form>
             </div>
         </div>)

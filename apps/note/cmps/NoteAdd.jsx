@@ -78,6 +78,7 @@ export function NoteAdd({ onAddNote }) {
 			onAddNote(note)
 
 		}
+		setItems([])
 		setType('NoteTxt')
 		setImgSrc('')
 		setTitle('')
@@ -119,11 +120,9 @@ export function NoteAdd({ onAddNote }) {
 						onAddSpecialNote(ev)
 						openEditor('NoteVideo')
 					}}></div>
-					<div className="upload-img-note fa-solid fa-image">
-						<label onClick={onAddSpecialNote} className="upload-img-note-label" htmlFor="imageInput">
-							<input onChange={getImage} onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
-						</label>
-					</div>
+					<label onClick={onAddSpecialNote} className="upload-img-note fa-solid fa-image upload-img-note-label" htmlFor="imageInput">
+						<input onChange={getImage} onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
+					</label>
 					<div className="todo-note-btn fa-solid fa-list" onClick={(ev) => {
 						onAddSpecialNote(ev)
 						openEditor('NoteTodos')
@@ -151,7 +150,7 @@ export function NoteAdd({ onAddNote }) {
 				&& (items.map((item, idx) => (<input
 					className={"note-text-edit edit-list-item-" + idx}
 					key={"edit-list-item-" + idx}
-					placeholder="To Do..."
+					placeholder="To do..."
 					value={item.txt}
 					onChange={(ev) => {
 						note.info.items[idx].txt = ev.target.value
@@ -162,7 +161,7 @@ export function NoteAdd({ onAddNote }) {
 				className="note-text-edit"
 				autoFocus
 				name="main-txt"
-				placeholder="Write a note..."
+				placeholder={type === 'NoteTodos' ? 'To do...' : 'Write a note...'}
 				value={txt}
 				onChange={(ev) => setTxt(ev.target.value)}
 			/>)}
@@ -180,7 +179,6 @@ export function NoteAdd({ onAddNote }) {
 					onAddSpecialNote(ev)
 					setItems([...items, { txt, isMarked: false }])
 					setTxt('')
-					console.log(note)
 				}}>Add Line</button>)}
 			<button type="submit" style={{ display: 'none' }}>save</button>
 		</form>

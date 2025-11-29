@@ -109,10 +109,10 @@
 }
 
 .search-txt-box-notes{
-
+    display: inline-block;
     height: 36px;
     font-size: 20px;
-    width: 50%;
+    width: 92%;
     background: none;
     border: none;
 }
@@ -171,7 +171,6 @@
 }
 
 .upload-img-note{
-    margin-top: 1px;
     width: 35px;
     height: 35px;
     place-content: center;
@@ -214,12 +213,26 @@
 }
 
 .filter-search-notes{
-    width: 100%;
+    width: 50%;
 }
 
 .filter-search-notes-form{
     place-self: center;
-    width: 50%;
+    width: 100%;
+    justify-content: center;
+    pointer-events: none;
+    button{
+        pointer-events: auto;
+    }
+    input{
+        pointer-events: auto;
+    }
+    input:focus{
+        outline: none;
+        border: 1px solid rgb(189, 189, 189);
+        border-top: none;
+        border-radius: 5px;
+    }
 }
 
 .note-item-label{
