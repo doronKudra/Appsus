@@ -58,10 +58,13 @@ function _createNotes() {
         notes = [
             _createNote('NoteTxt',true,{title:'Somewhere',txt:'Over the rainbow',tags:'music'},{},Date.now() - 10*1000*60),
             _createNote('NoteImg',false,{title:'Capybara',tags:'funny', imgSrc: 'assets/img/Capybara.jpg'},{},Date.now() - 20*1000*60),
-            _createNote('NoteTxt',false,{title:'Hello There',txt:'Somebody',tags:'fashion'},{},Date.now() - 5*1000*60),
+            _createNote('NoteTxt',false,{title:'Hi 123',txt:'Bla bla bla',tags:'fashion'},{},Date.now() - 5*1000*60),
             _createNote('NoteImg',false,{title:'What?',tags:'funny', imgSrc: 'assets/img/Capybara2.jpg'},{},Date.now() - 30*1000*60),
             _createNote('NoteVideo',false,{title:'Funny Video', tags:'funny', videoLink:'https://www.youtube.com/embed/J9E0DLwDSSs'},{},Date.now() - 50*1000*60),
             _createNote('NoteTodos',false,{title:'What?',tags:'funny', items: [{txt:'Fix bugs',isMarked:true},{txt:'Add Capybara',isMarked:true},{txt:'Edit Notes',isMarked:false}]},{},Date.now() - 30*1000*60),
+            _createNote('NoteTxt',true,{title:'Somewhere',txt:'Something',tags:'music'},{},Date.now() - 10*1000*60),
+            _createNote('NoteImg',false,{title:'Capybara',tags:'funny', imgSrc: 'assets/img/Capybara.jpg'},{},Date.now() - 20*1000*60),
+            _createNote('NoteTxt',false,{title:'Hello There',txt:'Somebody',tags:'fashion'},{},Date.now() - 5*1000*60),
         ]
         utilService.saveToStorage(NOTE_KEY, notes)
     }
