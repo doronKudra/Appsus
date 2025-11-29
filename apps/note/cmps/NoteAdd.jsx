@@ -68,7 +68,7 @@ export function NoteAdd({ onAddNote }) {
 		if (!isEmpty && typeof onAddNote === 'function') {
 			note.type = type
 			if(note.info.items.length) {
-				note.info.items.push(txt)
+				note.info.items.push({txt,isMarked: false})
 				setItems(note.info.items)
 			}
 			compressImage(imgSrc)
@@ -113,11 +113,16 @@ export function NoteAdd({ onAddNote }) {
 			<div className="new-note" onClick={(ev) => openEditor('NoteTxt')}>
 				<div className="text-box-cosmetic">Write a note...</div>
 				<div className="note-options">
-					<input onChange={getImage} className="fa-solid fa-image" onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
-					<button onClick={(ev) => {
+					<div>
+						<label onClick={onAddSpecialNote} className="upload-img-note-label" htmlFor="imageInput">
+							<div className="upload-img-note fa-solid fa-image"></div>
+							<input onChange={getImage} onClick={onAddSpecialNote} type="file" id="imageInput" accept="image/*" />
+						</label>
+					</div>
+					<div className="todo-note-btn fa-solid fa-list" onClick={(ev) => {
 						onAddSpecialNote(ev)
 						openEditor('NoteTodos')
-					}}>To Do</button>
+					}}></div>
 				</div>
 			</div>
 		)
@@ -141,9 +146,9 @@ export function NoteAdd({ onAddNote }) {
 					className={"note-text-edit edit-list-item-"+idx}
 					key={"edit-list-item-"+idx}
 					placeholder="To Do..."
-					value={item}
+					value={item.txt}
 					onChange={(ev) => {
-						note.info.items[idx] = ev.target.value
+						note.info.items[idx].txt = ev.target.value
 						setItems([...note.info.items])
 					}}
 					/>)))}
@@ -158,7 +163,7 @@ export function NoteAdd({ onAddNote }) {
 			{(type === 'NoteTodos') && 
 				(<button type="button" onClick={(ev) => {
 					onAddSpecialNote(ev)
-					setItems([...items, txt])
+					setItems([...items, {txt,isMarked: false}])
 					setTxt('')
 					console.log(note)
 				}}>Add Line</button>)}

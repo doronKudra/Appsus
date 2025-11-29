@@ -51,6 +51,12 @@ export function NoteIndex() {
             .finally(() => setIsLoading(false))
     }
 
+    function onMarkNote(note,idx){
+        note.info.items[idx].isMarked = !note.info.items[idx].isMarked
+        noteService.save(note)
+            .then(() => loadNotes())
+    }
+
     function onSetFilter({tag,type}){
         
     }
@@ -74,7 +80,9 @@ export function NoteIndex() {
         <NoteFilter onSetFilter={onSetFilter} />
         <section  className="note-index">
             <NoteAdd onAddNote={onAddNote} />
-            <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} onPinNote={onPinNote} onDuplicateNote={onDuplicateNote} notes={notes} />
+            <NoteList loadingClass={loadingClass} onRemoveNote={onRemoveNote} 
+            onPinNote={onPinNote} onDuplicateNote={onDuplicateNote}
+            onMarkNote={onMarkNote} notes={notes} />
         </section>
         </div>
     )
